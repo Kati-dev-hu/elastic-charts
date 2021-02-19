@@ -869,7 +869,7 @@ export function getNodeName(node: ArrayNode): string;
 export const Goal: React_2.FunctionComponent<SpecRequiredProps_8 & SpecOptionalProps_8>;
 
 // @alpha (undocumented)
-export interface GoalSpec extends Spec {
+export interface WordcloudSpec extends Spec {
     // (undocumented)
     actual: number;
     // (undocumented)

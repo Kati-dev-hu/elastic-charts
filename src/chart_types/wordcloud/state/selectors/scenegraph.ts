@@ -24,10 +24,10 @@ import { config as defaultConfig } from '../../layout/config/config';
 import { Config } from '../../layout/types/config_types';
 import { ShapeViewModel, nullShapeViewModel } from '../../layout/types/viewmodel_types';
 import { shapeViewModel } from '../../layout/viewmodel/viewmodel';
-import { GoalSpec } from '../../specs';
+import { WordcloudSpec } from '../../specs';
 
 /** @internal */
-export function render(spec: GoalSpec, parentDimensions: Dimensions): ShapeViewModel {
+export function render(spec: WordcloudSpec, parentDimensions: Dimensions): ShapeViewModel {
   const { width, height } = parentDimensions;
   const { config: specConfig } = spec;
   const textMeasurer = document.createElement('canvas');

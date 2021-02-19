@@ -51,7 +51,7 @@ const defaultProps = {
 };
 
 /** @alpha */
-export interface GoalSpec extends Spec {
+export interface WordcloudSpec extends Spec {
   specType: typeof SpecTypes.Series;
   chartType: typeof ChartTypes.Goal;
   subtype: GoalSubtype;
@@ -69,13 +69,13 @@ export interface GoalSpec extends Spec {
   config: RecursivePartial<Config>;
 }
 
-type SpecRequiredProps = Pick<GoalSpec, 'id' | 'actual'>;
-type SpecOptionalProps = Partial<Omit<GoalSpec, 'chartType' | 'specType' | 'id' | 'data'>>;
+type SpecRequiredProps = Pick<WordcloudSpec, 'id' | 'actual'>;
+type SpecOptionalProps = Partial<Omit<WordcloudSpec, 'chartType' | 'specType' | 'id' | 'data'>>;
 
 /** @alpha */
 export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptionalProps> = getConnect()(
   specComponentFactory<
-    GoalSpec,
+    WordcloudSpec,
     | 'config'
     | 'chartType'
     | 'subtype'
