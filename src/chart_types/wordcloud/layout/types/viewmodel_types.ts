@@ -19,7 +19,7 @@
 
 import { Pixels, PointObject } from '../../../../common/geometry';
 import { SpecTypes } from '../../../../specs/constants';
-import { BandFillColorAccessorInput } from '../../specs';
+import { WordcloudBandFillColorAccessorInput } from '../../specs';
 import { GoalSubtype } from '../../specs/constants';
 import { config } from '../config/config';
 import { Config } from './config_types';
@@ -76,7 +76,7 @@ const commonDefaults = {
 export const defaultGoalSpec = {
   ...commonDefaults,
   bands: [50, 75, 100],
-  bandFillColor: ({ value, base, highestValue, lowestValue }: BandFillColorAccessorInput) => {
+  bandFillColor: ({ value, base, highestValue, lowestValue }: WordcloudBandFillColorAccessorInput) => {
     const aboveBase = value > base;
     const ratio = aboveBase
       ? (value - base) / (Math.max(base, highestValue) - base)
@@ -84,12 +84,12 @@ export const defaultGoalSpec = {
     const level = Math.round(255 * ratio);
     return aboveBase ? `rgb(0, ${level}, 0)` : `rgb( ${level}, 0, 0)`;
   },
-  tickValueFormatter: ({ value }: BandFillColorAccessorInput) => String(value),
-  labelMajor: ({ base }: BandFillColorAccessorInput) => String(base),
+  tickValueFormatter: ({ value }: WordcloudBandFillColorAccessorInput) => String(value),
+  labelMajor: ({ base }: WordcloudBandFillColorAccessorInput) => String(base),
   // eslint-disable-next-line no-empty-pattern
-  labelMinor: ({}: BandFillColorAccessorInput) => 'unit',
-  centralMajor: ({ base }: BandFillColorAccessorInput) => String(base),
-  centralMinor: ({ target }: BandFillColorAccessorInput) => String(target),
+  labelMinor: ({}: WordcloudBandFillColorAccessorInput) => 'unit',
+  centralMajor: ({ base }: WordcloudBandFillColorAccessorInput) => String(base),
+  centralMinor: ({ target }: WordcloudBandFillColorAccessorInput) => String(target),
 };
 
 /** @internal */

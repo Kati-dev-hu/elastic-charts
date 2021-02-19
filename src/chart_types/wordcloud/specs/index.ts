@@ -30,7 +30,7 @@ import { defaultGoalSpec } from '../layout/types/viewmodel_types';
 import { GoalSubtype } from './constants';
 
 /** @alpha */
-export interface BandFillColorAccessorInput {
+export interface WordcloudBandFillColorAccessorInput {
   value: number;
   index: number;
   base: number;
@@ -42,7 +42,7 @@ export interface BandFillColorAccessorInput {
 }
 
 /** @alpha */
-export type BandFillColorAccessor = (input: BandFillColorAccessorInput) => Color;
+export type WordcloudBandFillColorAccessor = (input: WordcloudBandFillColorAccessorInput) => Color;
 
 const defaultProps = {
   chartType: ChartTypes.Goal,
@@ -60,12 +60,12 @@ export interface WordcloudSpec extends Spec {
   actual: number;
   bands: number[];
   ticks: number[];
-  bandFillColor: BandFillColorAccessor;
-  tickValueFormatter: BandFillColorAccessor;
-  labelMajor: string | BandFillColorAccessor;
-  labelMinor: string | BandFillColorAccessor;
-  centralMajor: string | BandFillColorAccessor;
-  centralMinor: string | BandFillColorAccessor;
+  bandFillColor: WordcloudBandFillColorAccessor;
+  tickValueFormatter: WordcloudBandFillColorAccessor;
+  labelMajor: string | WordcloudBandFillColorAccessor;
+  labelMinor: string | WordcloudBandFillColorAccessor;
+  centralMajor: string | WordcloudBandFillColorAccessor;
+  centralMinor: string | WordcloudBandFillColorAccessor;
   config: RecursivePartial<Config>;
 }
 
