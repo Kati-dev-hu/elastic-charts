@@ -20,7 +20,7 @@
 import { number, color, array } from '@storybook/addon-knobs';
 import React from 'react';
 
-import { Chart, Goal } from '../../src';
+import { Chart, Wordcloud } from '../../src';
 import { BandFillColorAccessorInput } from '../../src/chart_types/goal_chart/specs';
 import { GoalSubtype } from '../../src/chart_types/goal_chart/specs/constants';
 import { Color } from '../../src/utils/common';
@@ -49,7 +49,7 @@ export const Example = () => {
   const bandFillColor = (x: number): Color => colorMap[x];
   return (
     <Chart className="story-chart">
-      <Goal
+      <Wordcloud
         id="spec_1"
         subtype={subtype}
         base={base}

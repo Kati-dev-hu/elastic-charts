@@ -73,7 +73,7 @@ type SpecRequiredProps = Pick<GoalSpec, 'id' | 'actual'>;
 type SpecOptionalProps = Partial<Omit<GoalSpec, 'chartType' | 'specType' | 'id' | 'data'>>;
 
 /** @alpha */
-export const Goal: React.FunctionComponent<SpecRequiredProps & SpecOptionalProps> = getConnect()(
+export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptionalProps> = getConnect()(
   specComponentFactory<
     GoalSpec,
     | 'config'
