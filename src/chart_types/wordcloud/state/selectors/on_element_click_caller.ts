@@ -40,7 +40,7 @@ export function createOnElementClickCaller(): (state: GlobalChartState) => void 
   const prev: { click: PointerStates['lastClick'] } = { click: null };
   let selector: Selector<GlobalChartState, void> | null = null;
   return (state: GlobalChartState) => {
-    if (selector === null && state.chartType === ChartTypes.Goal) {
+    if (selector === null && state.chartType === ChartTypes.Wordcloud) {
       selector = createCachedSelector(
         [getSpecOrNull, getLastClickSelector, getSettingsSpecSelector, getPickedShapesLayerValues],
         getOnElementClickSelector(prev),

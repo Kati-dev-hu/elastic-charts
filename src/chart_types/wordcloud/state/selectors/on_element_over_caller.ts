@@ -39,7 +39,7 @@ export function createOnElementOverCaller(): (state: GlobalChartState) => void {
   const prev: { pickedShapes: LayerValue[][] } = { pickedShapes: [] };
   let selector: Selector<GlobalChartState, void> | null = null;
   return (state: GlobalChartState) => {
-    if (selector === null && state.chartType === ChartTypes.Goal) {
+    if (selector === null && state.chartType === ChartTypes.Wordcloud) {
       selector = createCachedSelector(
         [getSpecOrNull, getPickedShapesLayerValues, getSettingsSpecSelector],
         getOnElementOverSelector(prev),

@@ -45,7 +45,7 @@ interface ReactiveChartOwnProps {
 
 type Props = ReactiveChartStateProps & ReactiveChartDispatchProps & ReactiveChartOwnProps;
 class Component extends React.Component<Props> {
-  static displayName = 'Goal';
+  static displayName = 'Wordcloud';
 
   // firstRender = true; // this'll be useful for stable resizing of treemaps
   private ctx: CanvasRenderingContext2D | null;
@@ -67,6 +67,7 @@ class Component extends React.Component<Props> {
     this.tryCanvasContext();
     if (this.props.initialized) {
       this.drawCanvas();
+      console.log('wordcloud componentDidMount')
       this.props.onChartRendered();
     }
   }
@@ -77,6 +78,8 @@ class Component extends React.Component<Props> {
     }
     if (this.props.initialized) {
       this.drawCanvas();
+      console.log('wordcloud componentDidUpdate')
+
       this.props.onChartRendered();
     }
   }

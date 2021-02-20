@@ -45,7 +45,7 @@ export interface WordcloudBandFillColorAccessorInput {
 export type WordcloudBandFillColorAccessor = (input: WordcloudBandFillColorAccessorInput) => Color;
 
 const defaultProps = {
-  chartType: ChartTypes.Goal,
+  chartType: ChartTypes.Wordcloud,
   ...defaultGoalSpec,
   config,
 };
@@ -53,7 +53,7 @@ const defaultProps = {
 /** @alpha */
 export interface WordcloudSpec extends Spec {
   specType: typeof SpecTypes.Series;
-  chartType: typeof ChartTypes.Goal;
+  chartType: typeof ChartTypes.Wordcloud;
   subtype: GoalSubtype;
   base: number;
   target: number;

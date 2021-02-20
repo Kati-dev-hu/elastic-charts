@@ -41,8 +41,8 @@ const EMPTY_LEGEND_LIST: LegendItem[] = [];
 const EMPTY_LEGEND_ITEM_LIST: LegendItemLabel[] = [];
 
 /** @internal */
-export class GoalState implements InternalChartState {
-  chartType = ChartTypes.Goal;
+export class WordcloudState implements InternalChartState {
+  chartType = ChartTypes.Wordcloud;
 
   onElementClickCaller: (state: GlobalChartState) => void;
 

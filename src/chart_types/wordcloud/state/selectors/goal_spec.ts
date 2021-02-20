@@ -25,6 +25,6 @@ import { WordcloudSpec } from '../../specs';
 
 /** @internal */
 export function getSpecOrNull(state: GlobalChartState): WordcloudSpec | null {
-  const specs = getSpecsFromStore<WordcloudSpec>(state.specs, ChartTypes.Goal, SpecTypes.Series);
+  const specs = getSpecsFromStore<WordcloudSpec>(state.specs, ChartTypes.Wordcloud, SpecTypes.Series);
   return specs.length > 0 ? specs[0] : null;
 }

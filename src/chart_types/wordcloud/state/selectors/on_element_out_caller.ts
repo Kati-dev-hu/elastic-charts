@@ -38,7 +38,7 @@ export function createOnElementOutCaller(): (state: GlobalChartState) => void {
   const prev: { pickedShapes: number | null } = { pickedShapes: null };
   let selector: Selector<GlobalChartState, void> | null = null;
   return (state: GlobalChartState) => {
-    if (selector === null && state.chartType === ChartTypes.Goal) {
+    if (selector === null && state.chartType === ChartTypes.Wordcloud) {
       selector = createCachedSelector(
         [getSpecOrNull, getPickedShapesLayerValues, getSettingsSpecSelector],
         getOnElementOutSelector(prev),
