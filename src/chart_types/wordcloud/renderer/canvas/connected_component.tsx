@@ -44,6 +44,7 @@ interface ReactiveChartOwnProps {
 }
 
 type Props = ReactiveChartStateProps & ReactiveChartDispatchProps & ReactiveChartOwnProps;
+
 class Component extends React.Component<Props> {
   static displayName = 'Wordcloud';
 
@@ -67,7 +68,7 @@ class Component extends React.Component<Props> {
     this.tryCanvasContext();
     if (this.props.initialized) {
       this.drawCanvas();
-      console.log('wordcloud componentDidMount')
+      console.log('wordcloud componentDidMount');
       this.props.onChartRendered();
     }
   }
@@ -78,7 +79,7 @@ class Component extends React.Component<Props> {
     }
     if (this.props.initialized) {
       this.drawCanvas();
-      console.log('wordcloud componentDidUpdate')
+      console.log('wordcloud componentDidUpdate');
 
       this.props.onChartRendered();
     }
@@ -113,17 +114,24 @@ class Component extends React.Component<Props> {
     }
 
     return (
-      <canvas
-        ref={forwardStageRef}
-        className="echCanvasRenderer"
-        width={width * this.devicePixelRatio}
-        height={height * this.devicePixelRatio}
-        onMouseMove={this.handleMouseMove.bind(this)}
-        style={{
-          width,
-          height,
-        }}
-      />
+      <>
+        <canvas
+          ref={forwardStageRef}
+          className="echCanvasRenderer"
+          width={width * this.devicePixelRatio}
+          height={height * this.devicePixelRatio}
+          onMouseMove={this.handleMouseMove.bind(this)}
+          style={{
+            width,
+            height,
+          }}
+        />
+        <svg width={width} height={height}>
+          <g style={{ dominantBaseline: 'middle', textAnchor: 'middle' }}>
+            <text transform={`translate(${width / 2} ${height / 2})`}>Hello Kati</text>
+          </g>
+        </svg>
+      </>
     );
   }
 
