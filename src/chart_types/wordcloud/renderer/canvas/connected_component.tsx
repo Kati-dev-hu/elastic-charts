@@ -17,6 +17,8 @@
  * under the License.
  */
 
+// @ts-ignore
+import d3TagCloud from 'd3-cloud';
 import React, { MouseEvent, RefObject } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -28,7 +30,6 @@ import { Dimensions } from '../../../../utils/dimensions';
 import { nullShapeViewModel, ShapeViewModel } from '../../layout/types/viewmodel_types';
 import { geometries } from '../../state/selectors/geometries';
 import { renderCanvas2d } from './canvas_renderers';
-import d3TagCloud from 'd3-cloud';
 
 const configs = {
   negyzet: {
@@ -169,8 +170,32 @@ function layoutMaker(bonyesz) {
   );
 }
 
-const layout = layoutMaker(conf);
-debugger;
+const problema = (d) => {
+  return d.size + 'px';
+};
+
+const View = ({ words, conf }) => (
+  <svg width={getWidth(conf)} height={getHeight(conf)}>
+    <g transform={`translate(${getWidth(conf) / 2}, ${getHeight(conf) / 2})`}>
+      {words.map((d) => (
+        <text
+          style={{
+            transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
+            fontSize: problema(d),
+            fontStyle: getFontStyle(d),
+            fontFamily: getFont(d),
+            fontWeight: getFontWeight(d),
+            fill: d.color,
+          }}
+          textAnchor={'middle'}
+          transform={`translate(${d.x}, ${d.y}) rotate(${d.rotate})`}
+        >
+          {d.text}
+        </text>
+      ))}
+    </g>
+  </svg>
+);
 
 interface ReactiveChartStateProps {
   initialized: boolean;
@@ -255,6 +280,11 @@ class Component extends React.Component<Props> {
     if (!initialized || width === 0 || height === 0) {
       return null;
     }
+    const conf1 = { ...conf, width, height };
+    const layout = layoutMaker(conf1);
+
+    let ww;
+    layout.on('end', (w) => (ww = w)).start();
 
     return (
       <>
@@ -269,11 +299,7 @@ class Component extends React.Component<Props> {
             height,
           }}
         />
-        <svg width={width} height={height}>
-          <g style={{ dominantBaseline: 'middle', textAnchor: 'middle' }}>
-            <text transform={`translate(${width / 2} ${height / 2})`}>Hello Kati</text>
-          </g>
-        </svg>
+        <View words={ww} conf={conf1} />
       </>
     );
   }
