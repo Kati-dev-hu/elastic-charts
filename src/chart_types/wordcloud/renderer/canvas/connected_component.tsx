@@ -109,7 +109,23 @@ function getHeight(config) {
   return config.height || 500;
 }
 
+function getFontSize(d, extra) {
+  return d.size + extra;
+}
+
 function layoutMaker(bonyesz) {
+  const getRotation = function () {
+    const szogTartomany = bonyesz.vsz - bonyesz.ksz;
+    const count = bonyesz.count || 360;
+    const lepesVagyIntervallumSzam = count - 1;
+    const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
+    const randomUpTo = function (upto) {
+      return Math.random() * upto;
+    };
+    const randomUpToCount = randomUpTo(count);
+    const index = Math.floor(randomUpToCount);
+    return index * szogLepes + bonyesz.ksz;
+  };
   return (
     d3TagCloud()
       .size([getWidth(bonyesz), getHeight(bonyesz)])
@@ -150,23 +166,10 @@ function layoutMaker(bonyesz) {
            //   return Math.floor(Math.random() * 2) * 90;
        })
     */
-      .rotate(function () {
-        const szogTartomany = bonyesz.vsz - bonyesz.ksz;
-        const count = bonyesz.count || 360;
-        const lepesVagyIntervallumSzam = count - 1;
-        const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
-        const randomUpTo = function (upto) {
-          return Math.random() * upto;
-        };
-        const randomUpToCount = randomUpTo(count);
-        const index = Math.floor(randomUpToCount);
-        return index * szogLepes + bonyesz.ksz;
-      })
+      .rotate(getRotation)
       .font(getFont)
       .fontStyle(getFontStyle)
-      .fontSize(function (d) {
-        return d.size;
-      })
+      .fontSize((d) => getFontSize(d, 12))
   );
 }
 
