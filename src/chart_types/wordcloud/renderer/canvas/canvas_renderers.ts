@@ -42,7 +42,7 @@ function get<T>(o: { [k: string]: any }, name: string, dflt: T) {
 export function renderCanvas2d(
   ctx: CanvasRenderingContext2D,
   dpr: number,
-  { config, bulletViewModel, chartCenter }: ShapeViewModel,
+  { config, bulletViewModel, chartCenter, }: ShapeViewModel,
 ) {
   // eslint-disable-next-line no-empty-pattern
   const {} = config;
@@ -72,6 +72,9 @@ export function renderCanvas2d(
       highestValue,
       base,
       target,
+      startAngle,
+      endAngle,
+      angleCount,
       actual,
       bands,
       ticks,
@@ -90,6 +93,9 @@ export function renderCanvas2d(
       base: { value: base },
       ...Object.fromEntries(bands.map(({ value }, index) => [`qualitative_${index}`, { value }])),
       target: { value: target },
+      startAngle,
+      endAngle,
+      angleCount,
       actual: { value: actual },
       labelMajor: { value: domain[circular || !vertical ? 0 : 1], text: labelMajor },
       labelMinor: { value: domain[circular || !vertical ? 0 : 1], text: labelMinor },

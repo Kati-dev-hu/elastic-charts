@@ -170,7 +170,7 @@ function layoutMaker(bonyesz) {
       .rotate(() => getRotation(bonyesz.ksz, bonyesz.vsz, bonyesz.count))
       .font(getFont)
       .fontStyle(getFontStyle)
-      .fontSize((d) => getFontSize(d, 12))
+      .fontSize((d) => getFontSize(d, 0))
   );
 }
 
@@ -280,11 +280,19 @@ class Component extends React.Component<Props> {
       initialized,
       chartContainerDimensions: { width, height },
       forwardStageRef,
+      geometries: { bulletViewModel },
     } = this.props;
     if (!initialized || width === 0 || height === 0) {
       return null;
     }
-    const conf1 = { ...conf, width, height };
+    const conf1 = {
+      ...conf,
+      width,
+      height,
+      ksz: bulletViewModel.startAngle,
+      vsz: bulletViewModel.endAngle,
+      count: bulletViewModel.angleCount,
+    };
     const layout = layoutMaker(conf1);
 
     let ww;
@@ -315,6 +323,7 @@ class Component extends React.Component<Props> {
 
   private drawCanvas() {
     if (this.ctx) {
+      console.log(this.props.geometries.bulletViewModel);
       const { width, height }: Dimensions = this.props.chartContainerDimensions;
       renderCanvas2d(this.ctx, this.devicePixelRatio, {
         ...this.props.geometries,

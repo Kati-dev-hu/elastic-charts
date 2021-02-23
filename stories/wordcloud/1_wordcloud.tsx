@@ -52,8 +52,8 @@ export const Example = () => {
       <Wordcloud
         id="spec_1"
         subtype={subtype}
-        startAngle={-40}
-        endAngle={40}
+        startAngle={-80}
+        endAngle={80}
         angleCount={5}
         base={base}
         target={target}

@@ -39,6 +39,9 @@ export interface BulletViewModel {
   subtype: string;
   base: number;
   target: number;
+  startAngle: number;
+  endAngle: number;
+  angleCount: number;
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
