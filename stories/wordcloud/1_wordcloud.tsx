@@ -29,6 +29,9 @@ const subtype = GoalSubtype.Goal;
 
 export const Example = () => {
   const base = number('base', 0, { range: true, min: 0, max: 300, step: 1 });
+  const startAngle = number('startAngle', 0, { range: true, min: -360, max: 360, step: 1 });
+  const endAngle = number('endAngle', 0, { range: true, min: -360, max: 360, step: 1 });
+  const angleCount = number('angleCount', 0, { range: true, min: 1, max: 360, step: 1 });
   const target = number('target', 260, { range: true, min: 0, max: 300, step: 1 });
   const actual = number('actual', 170, { range: true, min: 0, max: 300, step: 1 });
   const ticks = array('ticks', ['0', '50', '100', '150', '200', '250', '300']).map(Number);
@@ -52,9 +55,9 @@ export const Example = () => {
       <Wordcloud
         id="spec_1"
         subtype={subtype}
-        startAngle={-80}
-        endAngle={80}
-        angleCount={5}
+        startAngle={startAngle}
+        endAngle={endAngle}
+        angleCount={angleCount}
         base={base}
         target={target}
         actual={actual}
