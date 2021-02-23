@@ -26,7 +26,7 @@ import { getConnect, specComponentFactory } from '../../../state/spec_factory';
 import { Color, RecursivePartial } from '../../../utils/common';
 import { config } from '../layout/config/config';
 import { Config } from '../layout/types/config_types';
-import { defaultGoalSpec } from '../layout/types/viewmodel_types';
+import { defaultWordcloudSpec } from '../layout/types/viewmodel_types';
 import { GoalSubtype } from './constants';
 
 /** @alpha */
@@ -34,6 +34,9 @@ export interface WordcloudBandFillColorAccessorInput {
   value: number;
   index: number;
   base: number;
+  startAngle: number;
+  endAngle: number;
+  angleCount: number;
   target: number;
   highestValue: number;
   lowestValue: number;
@@ -46,7 +49,7 @@ export type WordcloudBandFillColorAccessor = (input: WordcloudBandFillColorAcces
 
 const defaultProps = {
   chartType: ChartTypes.Wordcloud,
-  ...defaultGoalSpec,
+  ...defaultWordcloudSpec,
   config,
 };
 
@@ -56,6 +59,9 @@ export interface WordcloudSpec extends Spec {
   chartType: typeof ChartTypes.Wordcloud;
   subtype: GoalSubtype;
   base: number;
+  startAngle: number;
+  endAngle: number;
+  angleCount: number;
   target: number;
   actual: number;
   bands: number[];
@@ -78,6 +84,9 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     WordcloudSpec,
     | 'config'
     | 'chartType'
+    | 'startAngle'
+    | 'endAngle'
+    | 'angleCount'
     | 'subtype'
     | 'base'
     | 'target'

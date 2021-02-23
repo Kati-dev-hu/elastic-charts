@@ -67,13 +67,16 @@ const commonDefaults = {
   specType: SpecTypes.Series,
   subtype: GoalSubtype.Goal,
   base: 0,
+  startAngle: -20,
+  endAngle: 20,
+  angleCount: 5,
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],
 };
 
 /** @internal */
-export const defaultGoalSpec = {
+export const defaultWordcloudSpec = {
   ...commonDefaults,
   bands: [50, 75, 100],
   bandFillColor: ({ value, base, highestValue, lowestValue }: WordcloudBandFillColorAccessorInput) => {

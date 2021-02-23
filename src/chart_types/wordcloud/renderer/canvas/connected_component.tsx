@@ -113,9 +113,9 @@ function getFontSize(d, extra) {
   return d.size + extra;
 }
 
-function getRotation(bonyesz) {
-  const szogTartomany = bonyesz.vsz - bonyesz.ksz;
-  const count = bonyesz.count || 360;
+function getRotation(ksz, vsz, count) {
+  const szogTartomany = vsz - ksz;
+  const count = count || 360;
   const lepesVagyIntervallumSzam = count - 1;
   const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
   const randomUpTo = function (upto) {
@@ -123,10 +123,8 @@ function getRotation(bonyesz) {
   };
   const randomUpToCount = randomUpTo(count);
   const index = Math.floor(randomUpToCount);
-  return index * szogLepes + bonyesz.ksz;
-};
-
-
+  return index * szogLepes + ksz;
+}
 
 function layoutMaker(bonyesz) {
   return (
@@ -169,7 +167,7 @@ function layoutMaker(bonyesz) {
            //   return Math.floor(Math.random() * 2) * 90;
        })
     */
-      .rotate(() => getRotation(bonyesz))
+      .rotate(() => getRotation(bonyesz.ksz, bonyesz.vsz, bonyesz.count))
       .font(getFont)
       .fontStyle(getFontStyle)
       .fontSize((d) => getFontSize(d, 12))
