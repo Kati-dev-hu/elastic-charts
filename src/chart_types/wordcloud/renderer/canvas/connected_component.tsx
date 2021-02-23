@@ -113,19 +113,22 @@ function getFontSize(d, extra) {
   return d.size + extra;
 }
 
-function layoutMaker(bonyesz) {
-  const getRotation = function () {
-    const szogTartomany = bonyesz.vsz - bonyesz.ksz;
-    const count = bonyesz.count || 360;
-    const lepesVagyIntervallumSzam = count - 1;
-    const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
-    const randomUpTo = function (upto) {
-      return Math.random() * upto;
-    };
-    const randomUpToCount = randomUpTo(count);
-    const index = Math.floor(randomUpToCount);
-    return index * szogLepes + bonyesz.ksz;
+function getRotation(bonyesz) {
+  const szogTartomany = bonyesz.vsz - bonyesz.ksz;
+  const count = bonyesz.count || 360;
+  const lepesVagyIntervallumSzam = count - 1;
+  const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
+  const randomUpTo = function (upto) {
+    return Math.random() * upto;
   };
+  const randomUpToCount = randomUpTo(count);
+  const index = Math.floor(randomUpToCount);
+  return index * szogLepes + bonyesz.ksz;
+};
+
+
+
+function layoutMaker(bonyesz) {
   return (
     d3TagCloud()
       .size([getWidth(bonyesz), getHeight(bonyesz)])
@@ -166,7 +169,7 @@ function layoutMaker(bonyesz) {
            //   return Math.floor(Math.random() * 2) * 90;
        })
     */
-      .rotate(getRotation)
+      .rotate(() => getRotation(bonyesz))
       .font(getFont)
       .fontStyle(getFontStyle)
       .fontSize((d) => getFontSize(d, 12))
