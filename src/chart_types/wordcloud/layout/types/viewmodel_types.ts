@@ -42,6 +42,7 @@ export interface BulletViewModel {
   startAngle: number;
   endAngle: number;
   angleCount: number;
+  padding: number;
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
@@ -73,6 +74,7 @@ const commonDefaults = {
   startAngle: -20,
   endAngle: 20,
   angleCount: 5,
+  padding: 2,
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],

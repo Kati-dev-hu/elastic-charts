@@ -292,6 +292,7 @@ class Component extends React.Component<Props> {
       ksz: bulletViewModel.startAngle,
       vsz: bulletViewModel.endAngle,
       count: bulletViewModel.angleCount,
+      padding: bulletViewModel.padding,
     };
     const layout = layoutMaker(conf1);
 
