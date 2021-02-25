@@ -128,40 +128,42 @@ function getRotation(ksz, vsz, count) {
 
 function layoutMaker(bonyesz) {
   // console.log(bonyesz.padding);
+  const data = szoveg
+    //
+    .replace(/[,.]/g, '')
+    //
+    .toLowerCase()
+    //
+    .split(' ')
+    //
+    .filter(function (d, index, a) {
+      return a.indexOf(d) === index;
+    })
+    //
+    .map(function (d) {
+      return {
+        text: d,
+        weight: Math.random() ** 5,
+        color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
+          255 * Math.random(),
+        )})`,
+      };
+    });
   return (
     d3TagCloud()
       .size([getWidth(bonyesz), getHeight(bonyesz)])
       .words(
-        szoveg
-          //
-          .replace(/[,.]/g, '')
-          //
-          .toLowerCase()
-          //
-          .split(' ')
-          //
-          .filter(function (d, index, a) {
-            return a.indexOf(d) === index;
-          })
-          //
-          .map(function (d) {
-            const weight = Math.random() ** 5;
-            return {
-              //   text: d.concat("wow"),
-              text: d,
-              size: 10 + weight * 90,
-              color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
-                255 * Math.random(),
-              )})`,
-              betuTipus: bonyesz.fontFamily || 'Impact',
-              stilus: bonyesz.fontStyle || 'normal',
-              vastagsag: bonyesz.fontWeight || 'normal',
-              hovirag: true,
-            };
-          }),
+        data.map((d) => ({
+          text: d.text,
+          color: d.color,
+          betuTipus: bonyesz.fontFamily ?? 'Impact',
+          stilus: bonyesz.fontStyle ?? 'normal',
+          vastagsag: bonyesz.fontWeight ?? 'normal',
+          size: 10 + d.weight * 90,
+        })),
       )
 
-      .padding(bonyesz.padding || 5)
+      .padding(bonyesz.padding ?? 5)
       /* .rotate(function () {
            return Math.random()*(vegSzog()-kezdoSzog())+kezdoSzog();
        // .rotate(function () {
@@ -295,7 +297,7 @@ class Component extends React.Component<Props> {
       fontFamily: bulletViewModel.fontFamily,
       fontStyle: bulletViewModel.fontStyle,
     };
-   // console.log(conf1.fontWeight);
+    // console.log(conf1.fontWeight);
     const layout = layoutMaker(conf1);
 
     let ww;
