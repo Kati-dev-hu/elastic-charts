@@ -44,6 +44,7 @@ export interface BulletViewModel {
   angleCount: number;
   padding: number;
   fontWeight: number;
+  fontFamily: string;
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
@@ -77,6 +78,7 @@ const commonDefaults = {
   angleCount: 5,
   padding: 2,
   fontWeight: 300,
+  fontFamily: 'Impact',
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],

@@ -153,7 +153,7 @@ function layoutMaker(bonyesz) {
               color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
                 255 * Math.random(),
               )})`,
-              betuTipus: bonyesz.botu || 'Arial',
+              betuTipus: bonyesz.fontFamily || 'Impact',
               stilus: bonyesz.stil || 'normal',
               vastagsag: bonyesz.fontWeight || 'normal',
               hovirag: true,
@@ -292,6 +292,7 @@ class Component extends React.Component<Props> {
       count: bulletViewModel.angleCount,
       padding: bulletViewModel.padding,
       fontWeight: bulletViewModel.fontWeight,
+      fontFamily: bulletViewModel.fontFamily,
     };
     console.log(conf1.fontWeight);
     const layout = layoutMaker(conf1);

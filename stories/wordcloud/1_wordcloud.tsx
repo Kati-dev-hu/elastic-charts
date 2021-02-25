@@ -17,10 +17,10 @@
  * under the License.
  */
 
-import { number, color, array } from '@storybook/addon-knobs';
+import { number, color, array, select } from '@storybook/addon-knobs';
 import React from 'react';
 
-import { Chart, Wordcloud } from '../../src';
+import { Chart, PartitionLayout, Wordcloud } from '../../src';
 import { BandFillColorAccessorInput } from '../../src/chart_types/goal_chart/specs';
 import { GoalSubtype } from '../../src/chart_types/goal_chart/specs/constants';
 import { Color } from '../../src/utils/common';
@@ -36,6 +36,12 @@ export const Example = () => {
   const angleCount = number('angleCount', 5, { range: true, min: 1, max: 360, step: 1 });
   const padding = number('padding', 2, { range: true, min: 1, max: 10, step: 1 });
   const fontWeight = number('fontWeight', 100, { range: true, min: 100, max: 900, step: 100 });
+  const fontFamily = select(
+    'fontFamily',
+    { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
+    'fontFamily',
+  );
+
   const ticks = array('ticks', ['0', '50', '100', '150', '200', '250', '300']).map(Number);
   const bands = array('bands', ['200', '250', '300']).map(Number);
 
@@ -62,6 +68,7 @@ export const Example = () => {
         angleCount={angleCount}
         padding={padding}
         fontWeight={fontWeight}
+        fontFamily={fontFamily}
         base={base}
         target={target}
         actual={actual}
