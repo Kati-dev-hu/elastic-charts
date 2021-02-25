@@ -49,6 +49,7 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     padding,
     fontWeight,
     fontFamily,
+    fontStyle,
     actual,
     bands,
     ticks,
@@ -77,6 +78,7 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     padding,
     fontWeight,
     fontFamily,
+    fontStyle,
     actual,
     highestValue,
     lowestValue,
@@ -94,6 +96,7 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     padding,
     fontWeight,
     fontFamily,
+    fontStyle,
     actual,
     bands: bands.map((value: number, index: number) => ({
       value,

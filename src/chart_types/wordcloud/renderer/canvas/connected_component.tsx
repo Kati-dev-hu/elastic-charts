@@ -154,7 +154,7 @@ function layoutMaker(bonyesz) {
                 255 * Math.random(),
               )})`,
               betuTipus: bonyesz.fontFamily || 'Impact',
-              stilus: bonyesz.stil || 'normal',
+              stilus: bonyesz.fontStyle || 'normal',
               vastagsag: bonyesz.fontWeight || 'normal',
               hovirag: true,
             };
@@ -293,8 +293,9 @@ class Component extends React.Component<Props> {
       padding: bulletViewModel.padding,
       fontWeight: bulletViewModel.fontWeight,
       fontFamily: bulletViewModel.fontFamily,
+      fontStyle: bulletViewModel.fontStyle,
     };
-    console.log(conf1.fontWeight);
+   // console.log(conf1.fontWeight);
     const layout = layoutMaker(conf1);
 
     let ww;

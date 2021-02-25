@@ -40,6 +40,7 @@ export interface WordcloudBandFillColorAccessorInput {
   padding: number;
   fontWeight: number;
   fontFamily: string;
+  fontStyle: string;
   target: number;
   highestValue: number;
   lowestValue: number;
@@ -68,6 +69,7 @@ export interface WordcloudSpec extends Spec {
   padding: number;
   fontWeight: number;
   fontFamily: string;
+  fontStyle: string;
   target: number;
   actual: number;
   bands: number[];
@@ -96,6 +98,7 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     | 'padding'
     | 'fontWeight'
     | 'fontFamily'
+    | 'fontStyle'
     | 'subtype'
     | 'base'
     | 'target'

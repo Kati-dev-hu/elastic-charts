@@ -45,6 +45,7 @@ export interface BulletViewModel {
   padding: number;
   fontWeight: number;
   fontFamily: string;
+  fontStyle: string;
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
@@ -79,6 +80,7 @@ const commonDefaults = {
   padding: 2,
   fontWeight: 300,
   fontFamily: 'Impact',
+  fontStyle: 'italic',
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],

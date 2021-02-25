@@ -39,8 +39,9 @@ export const Example = () => {
   const fontFamily = select(
     'fontFamily',
     { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
-    'fontFamily',
+    'Arial',
   );
+  const fontStyle = select('fontStyle', { normal: 'normal', italic: 'italic' }, 'normal');
 
   const ticks = array('ticks', ['0', '50', '100', '150', '200', '250', '300']).map(Number);
   const bands = array('bands', ['200', '250', '300']).map(Number);
@@ -69,6 +70,7 @@ export const Example = () => {
         padding={padding}
         fontWeight={fontWeight}
         fontFamily={fontFamily}
+        fontStyle={fontStyle}
         base={base}
         target={target}
         actual={actual}
