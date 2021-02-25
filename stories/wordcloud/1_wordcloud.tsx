@@ -33,13 +33,13 @@ export const Example = () => {
   const actual = number('actual', 170, { range: true, min: 0, max: 300, step: 1 });
   const startAngle = number('startAngle', -45, { range: true, min: -360, max: 360, step: 1 });
   const endAngle = number('endAngle', 45, { range: true, min: -360, max: 360, step: 1 });
-  const angleCount = number('angleCount', 5, { range: true, min: 1, max: 360, step: 1 });
+  const angleCount = number('angleCount', 2, { range: true, min: 2, max: 360, step: 1 });
   const padding = number('padding', 2, { range: true, min: 1, max: 10, step: 1 });
-  const fontWeight = number('fontWeight', 100, { range: true, min: 100, max: 900, step: 100 });
+  const fontWeight = number('fontWeight', 300, { range: true, min: 100, max: 900, step: 100 });
   const fontFamily = select(
     'fontFamily',
     { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
-    'Arial',
+    'Arial Narrow',
   );
   const fontStyle = select('fontStyle', { normal: 'normal', italic: 'italic' }, 'normal');
 
@@ -59,6 +59,7 @@ export const Example = () => {
   }, {});
 
   const bandFillColor = (x: number): Color => colorMap[x];
+  console.log("story", fontWeight);
   return (
     <Chart className="story-chart">
       <Wordcloud

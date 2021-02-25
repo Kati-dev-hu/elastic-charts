@@ -31,115 +31,54 @@ import { nullShapeViewModel, ShapeViewModel } from '../../layout/types/viewmodel
 import { geometries } from '../../state/selectors/geometries';
 import { renderCanvas2d } from './canvas_renderers';
 
-const configs = {
-  negyzet: {
-    width: 1000,
-    height: 1000,
-  },
-  teglalap: {
-    width: 700,
-    height: 400,
-  },
-  suru: {
-    padding: 2,
-  },
-  kozepes: {
-    padding: 3,
-  },
-  laza: {
-    padding: 10,
-  },
-  courier: {
-    botu: 'Courier',
-  },
-  arial: {
-    botu: 'Arial',
-  },
-  kover: {
-    vastag: 'bold',
-  },
-  dolt: {
-    stil: 'italic',
-  },
-  szogek: {
-    count: 6,
-    ksz: -75,
-    vsz: 75,
-  },
-};
+function getFont(d) {
+  return d.fontFamily;
+}
 
-const demo = ['kozepes', 'teglalap', 'szogek', 'kover', 'courier'];
-
-const conf = Object.assign({}, ...demo.map((d) => configs[d] || {}));
-// const conf = Object.assign({}, configs['kozepes'],configs['teglalap'],configs['szogek'],configs['kover'], )
-
-const getFont = function (d) {
-  return d.betuTipus;
-};
-
-const getFontStyle = function (d) {
-  return d.stilus;
-};
+function getFontStyle(d) {
+  return d.style;
+}
 
 function getFontWeight(d) {
-  return d.vastagsag;
+  return d.fontWeight;
 }
 
-const kezdoSzog = function () {
-  return Math.random() * 360;
-};
-
-const vegSzog = function (startingAngle) {
-  const kor = 360;
-  return startingAngle + Math.random() * kor; //akar itt is megadhatom a kezdoSzog inputot
-};
-
-const ksz = kezdoSzog();
-const vsz = vegSzog(ksz);
-
-const szoveg =
+const text =
   'Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn. Snackwave artisan man braid DIY retro truffaut tumeric helvetica. Ugh shabby chic PBR&B pork belly vegan pabst, food truck plaid direct trade franzen pour-over chillwave fingerstache. Blog pinterest intelligentsia humblebrag, farm-to-table hashtag umami williamsburg. Bushwick helvetica godard jianbing bicycle rights, salvia hashtag before they sold out lumbersexual. Waistcoat snackwave gentrify mumblecore farm-to-table banjo tbh post-ironic aesthetic. Bushwick selfies poutine kinfolk bicycle rights williamsburg, cray affogato iPhone sustainable. Shoreditch lo-fi tbh, palo santo affogato banh mi narwhal. Pickled pitchfork heirloom vice man bun normcore post-ironic ethical freegan blog. Chillwave readymade activated charcoal, shaman chia literally fixie stumptown jianbing yuccie lo-fi kinfolk coloring book small batch helvetica.';
-// const szoveg = "Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn.";
 
-function getWidth(config) {
-  return config.width || 500;
+function getWidth(conf) {
+  return conf.width ?? 500;
 }
 
-function getHeight(config) {
-  return config.height || 500;
+function getHeight(conf) {
+  return conf.height ?? 500;
 }
 
-function getFontSize(d, extra) {
-  return d.size + extra;
+function getFontSize(d) {
+  return d.size;
 }
 
-function getRotation(ksz, vsz, count) {
-  const szogTartomany = vsz - ksz;
-  const count = count || 360;
-  const lepesVagyIntervallumSzam = count - 1;
-  const szogLepes = szogTartomany / lepesVagyIntervallumSzam;
+function getRotation(startAngle, endAngle, count) {
+  const angleRange = endAngle - startAngle;
+  const count = count ?? 360;
+  const interval = count - 1;
+  const angleStep = angleRange / interval;
   const randomUpTo = function (upto) {
     return Math.random() * upto;
   };
   const randomUpToCount = randomUpTo(count);
   const index = Math.floor(randomUpToCount);
-  return index * szogLepes + ksz;
+  return index * angleStep + startAngle;
 }
 
-function layoutMaker(bonyesz) {
-  // console.log(bonyesz.padding);
-  const data = szoveg
-    //
+function layoutMaker(config) {
+  const data = text
     .replace(/[,.]/g, '')
-    //
     .toLowerCase()
-    //
     .split(' ')
-    //
     .filter(function (d, index, a) {
       return a.indexOf(d) === index;
     })
-    //
     .map(function (d) {
       return {
         text: d,
@@ -149,57 +88,48 @@ function layoutMaker(bonyesz) {
         )})`,
       };
     });
-  return (
-    d3TagCloud()
-      .size([getWidth(bonyesz), getHeight(bonyesz)])
-      .words(
-        data.map((d) => ({
-          text: d.text,
-          color: d.color,
-          betuTipus: bonyesz.fontFamily ?? 'Impact',
-          stilus: bonyesz.fontStyle ?? 'normal',
-          vastagsag: bonyesz.fontWeight ?? 'normal',
-          size: 10 + d.weight * 90,
-        })),
-      )
+  return d3TagCloud()
+    .size([getWidth(config), getHeight(config)])
+    .words(
+      data.map((d) => ({
+        text: d.text,
+        color: d.color,
+        fontFamily: config.fontFamily ?? 'Impact',
+        style: config.fontStyle ?? 'normal',
+        fontWeight: config.fontWeight ?? 'normal',
+        size: 10 + d.weight * 90,
+      })),
+    )
 
-      .padding(bonyesz.padding ?? 5)
-      /* .rotate(function () {
-           return Math.random()*(vegSzog()-kezdoSzog())+kezdoSzog();
-       // .rotate(function () {
-           //   return Math.floor(Math.random() * 2) * 90;
-       })
-    */
-      .rotate(() => getRotation(bonyesz.ksz, bonyesz.vsz, bonyesz.count))
-      .font(getFont)
-      .fontStyle(getFontStyle)
-      .fontSize((d) => getFontSize(d, 0))
-  );
+    .padding(config.padding ?? 5)
+    .rotate(() => getRotation(config.startAngle, config.endAngle, config.count))
+    .font(getFont)
+    .fontStyle(getFontStyle)
+    .fontSize((d) => getFontSize(d, 0));
 }
-
-const problema = (d) => {
-  return d.size + 'px';
-};
 
 const View = ({ words, conf }) => (
   <svg width={getWidth(conf)} height={getHeight(conf)}>
     <g transform={`translate(${getWidth(conf) / 2}, ${getHeight(conf) / 2})`}>
-      {words.map((d) => (
-        <text
-          style={{
-            transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
-            fontSize: problema(d),
-            fontStyle: getFontStyle(d),
-            fontFamily: getFont(d),
-            fontWeight: getFontWeight(d),
-            fill: d.color,
-          }}
-          textAnchor={'middle'}
-          transform={`translate(${d.x}, ${d.y}) rotate(${d.rotate})`}
-        >
-          {d.text}
-        </text>
-      ))}
+      {words.map(
+        (d) =>
+          console.log('cc', getFontWeight(d)) || (
+            <text
+              style={{
+                transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
+                fontSize: getFontSize(d),
+                fontStyle: getFontStyle(d),
+                fontFamily: getFont(d),
+                fontWeight: getFontWeight(d),
+                fill: d.color,
+              }}
+              textAnchor={'middle'}
+              transform={`translate(${d.x}, ${d.y}) rotate(${d.rotate})`}
+            >
+              {d.text}
+            </text>
+          ),
+      )}
     </g>
   </svg>
 );
@@ -286,18 +216,16 @@ class Component extends React.Component<Props> {
       return null;
     }
     const conf1 = {
-      ...conf,
       width,
       height,
-      ksz: bulletViewModel.startAngle,
-      vsz: bulletViewModel.endAngle,
+      startAngle: bulletViewModel.startAngle,
+      endAngle: bulletViewModel.endAngle,
       count: bulletViewModel.angleCount,
       padding: bulletViewModel.padding,
       fontWeight: bulletViewModel.fontWeight,
       fontFamily: bulletViewModel.fontFamily,
       fontStyle: bulletViewModel.fontStyle,
     };
-    // console.log(conf1.fontWeight);
     const layout = layoutMaker(conf1);
 
     let ww;
