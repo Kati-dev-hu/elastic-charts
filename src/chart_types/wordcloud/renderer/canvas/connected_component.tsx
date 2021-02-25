@@ -68,7 +68,7 @@ const configs = {
   },
 };
 
-const demo = ['kozepes', 'teglalap', 'szogek', 'kover'];
+const demo = ['kozepes', 'teglalap', 'szogek', 'kover', 'courier'];
 
 const conf = Object.assign({}, ...demo.map((d) => configs[d] || {}));
 // const conf = Object.assign({}, configs['kozepes'],configs['teglalap'],configs['szogek'],configs['kover'], )
@@ -81,9 +81,9 @@ const getFontStyle = function (d) {
   return d.stilus;
 };
 
-const getFontWeight = function (d) {
+function getFontWeight(d) {
   return d.vastagsag;
-};
+}
 
 const kezdoSzog = function () {
   return Math.random() * 360;
@@ -127,6 +127,7 @@ function getRotation(ksz, vsz, count) {
 }
 
 function layoutMaker(bonyesz) {
+  // console.log(bonyesz.padding);
   return (
     d3TagCloud()
       .size([getWidth(bonyesz), getHeight(bonyesz)])
@@ -152,9 +153,9 @@ function layoutMaker(bonyesz) {
               color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
                 255 * Math.random(),
               )})`,
-              betuTipus: bonyesz.botu || 'Impact',
+              betuTipus: bonyesz.botu || 'Arial',
               stilus: bonyesz.stil || 'normal',
-              vastagsag: bonyesz.vastag || 'normal',
+              vastagsag: bonyesz.fontWeight || 'normal',
               hovirag: true,
             };
           }),
@@ -240,7 +241,6 @@ class Component extends React.Component<Props> {
     this.tryCanvasContext();
     if (this.props.initialized) {
       this.drawCanvas();
-      console.log('wordcloud componentDidMount');
       this.props.onChartRendered();
     }
   }
@@ -251,8 +251,6 @@ class Component extends React.Component<Props> {
     }
     if (this.props.initialized) {
       this.drawCanvas();
-      console.log('wordcloud componentDidUpdate');
-
       this.props.onChartRendered();
     }
   }
@@ -293,7 +291,9 @@ class Component extends React.Component<Props> {
       vsz: bulletViewModel.endAngle,
       count: bulletViewModel.angleCount,
       padding: bulletViewModel.padding,
+      fontWeight: bulletViewModel.fontWeight,
     };
+    console.log(conf1.fontWeight);
     const layout = layoutMaker(conf1);
 
     let ww;
@@ -324,7 +324,7 @@ class Component extends React.Component<Props> {
 
   private drawCanvas() {
     if (this.ctx) {
-      console.log(this.props.geometries.bulletViewModel);
+      // console.log(this.props.geometries.bulletViewModel);
       const { width, height }: Dimensions = this.props.chartContainerDimensions;
       renderCanvas2d(this.ctx, this.devicePixelRatio, {
         ...this.props.geometries,

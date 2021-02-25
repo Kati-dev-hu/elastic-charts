@@ -38,6 +38,7 @@ export interface WordcloudBandFillColorAccessorInput {
   endAngle: number;
   angleCount: number;
   padding: number;
+  fontWeight: number;
   target: number;
   highestValue: number;
   lowestValue: number;
@@ -64,6 +65,7 @@ export interface WordcloudSpec extends Spec {
   endAngle: number;
   angleCount: number;
   padding: number;
+  fontWeight: number;
   target: number;
   actual: number;
   bands: number[];
@@ -90,6 +92,7 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     | 'endAngle'
     | 'angleCount'
     | 'padding'
+    | 'fontWeight'
     | 'subtype'
     | 'base'
     | 'target'
