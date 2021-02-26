@@ -27,17 +27,22 @@ import { Color } from '../../src/utils/common';
 
 const subtype = GoalSubtype.Goal;
 
+const firstAlpha = [{ startAngle: -45 }];
+const chosen = 0;
+
+const startConfig = firstAlpha[chosen];
 export const Example = () => {
   const base = number('base', 0, { range: true, min: 0, max: 300, step: 1 });
   const target = number('target', 260, { range: true, min: 0, max: 300, step: 1 });
   const actual = number('actual', 170, { range: true, min: 0, max: 300, step: 1 });
-  const startAngle = number('startAngle', -45, { range: true, min: -360, max: 360, step: 1 });
+  const spiral = select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, 'archimedean');
+  const startAngle = number('startAngle', startConfig.startAngle, { range: true, min: -360, max: 360, step: 1 });
   const endAngle = number('endAngle', 45, { range: true, min: -360, max: 360, step: 1 });
   const angleCount = number('angleCount', 2, { range: true, min: 2, max: 360, step: 1 });
-  const padding = number('padding', 2, { range: true, min: 1, max: 10, step: 1 });
+  const padding = number('padding', 2, { range: true, min: 0, max: 10, step: 1 });
   const fontWeight = number('fontWeight', 300, { range: true, min: 100, max: 900, step: 100 });
-  const minFontSize = number('minFontSize', 10, { range: true, min: 10, max: 85, step: 5 });
-  const maxFontSize = number('maxFontSize', 90, { range: true, min: 15, max: 90, step: 5 });
+  const minFontSize = number('minFontSize', 10, { range: true, min: 6, max: 85, step: 1 });
+  const maxFontSize = number('maxFontSize', 90, { range: true, min: 15, max: 150, step: 1 });
   const fontFamily = select(
     'fontFamily',
     { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
@@ -61,7 +66,7 @@ export const Example = () => {
   }, {});
 
   const bandFillColor = (x: number): Color => colorMap[x];
-  console.log("story", fontWeight);
+  console.log('story', { minFontSize, maxFontSize });
   return (
     <Chart className="story-chart">
       <Wordcloud
@@ -76,6 +81,7 @@ export const Example = () => {
         fontStyle={fontStyle}
         minFontSize={minFontSize}
         maxFontSize={maxFontSize}
+        spiral={spiral}
         base={base}
         target={target}
         actual={actual}

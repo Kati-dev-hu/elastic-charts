@@ -89,7 +89,6 @@ const data = text
   });
 
 function layoutMaker(config, adat) {
-  console.log('size', );
   return d3TagCloud()
     .size([getWidth(config), getHeight(config)])
     .words(
@@ -99,9 +98,10 @@ function layoutMaker(config, adat) {
         fontFamily: config.fontFamily ?? 'Impact',
         style: config.fontStyle ?? 'normal',
         fontWeight: config.fontWeight ?? 'normal',
-        size: 10 + d.weight * 80,
+        size: config.minFontSize + (config.maxFontSize - config.minFontSize) * d.weight,
       })),
     )
+    .spiral(config.spiral ?? 'archimedean')
     .padding(config.padding ?? 5)
     .rotate(() => getRotation(config.startAngle, config.endAngle, config.count))
     .font(getFont)
@@ -113,25 +113,22 @@ function layoutMaker(config, adat) {
 const View = ({ words, conf }) => (
   <svg width={getWidth(conf)} height={getHeight(conf)}>
     <g transform={`translate(${getWidth(conf) / 2}, ${getHeight(conf) / 2})`}>
-      {words.map(
-        (d) =>
-          console.log('cc DOM', getFontWeight(d)) || (
-            <text
-              style={{
-                transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
-                fontSize: getFontSize(d),
-                fontStyle: getFontStyle(d),
-                fontFamily: getFont(d),
-                fontWeight: getFontWeight(d),
-                fill: d.color,
-              }}
-              textAnchor={'middle'}
-              transform={`translate(${d.x}, ${d.y}) rotate(${d.rotate})`}
-            >
-              {d.text}
-            </text>
-          ),
-      )}
+      {words.map((d) => (
+        <text
+          style={{
+            transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
+            fontSize: getFontSize(d),
+            fontStyle: getFontStyle(d),
+            fontFamily: getFont(d),
+            fontWeight: getFontWeight(d),
+            fill: d.color,
+          }}
+          textAnchor={'middle'}
+          transform={`translate(${d.x}, ${d.y}) rotate(${d.rotate})`}
+        >
+          {d.text}
+        </text>
+      ))}
     </g>
   </svg>
 );
@@ -227,6 +224,9 @@ class Component extends React.Component<Props> {
       fontWeight: bulletViewModel.fontWeight,
       fontFamily: bulletViewModel.fontFamily,
       fontStyle: bulletViewModel.fontStyle,
+      minFontSize: bulletViewModel.minFontSize,
+      maxFontSize: bulletViewModel.maxFontSize,
+      spiral: bulletViewModel.spiral,
     };
     const layout = layoutMaker(conf1, data);
 

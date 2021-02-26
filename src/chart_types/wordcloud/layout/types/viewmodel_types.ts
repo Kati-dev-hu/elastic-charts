@@ -46,6 +46,9 @@ export interface BulletViewModel {
   fontWeight: number;
   fontFamily: string;
   fontStyle: string;
+  minFontSize: number;
+  maxFontSize: number;
+  spiral: string;
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
@@ -81,6 +84,9 @@ const commonDefaults = {
   fontWeight: 300,
   fontFamily: 'Impact',
   fontStyle: 'italic',
+  minFontSize: 10,
+  maxFontSize: 50,
+  spiral: 'archimedean',
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],
