@@ -71,41 +71,41 @@ function getRotation(startAngle, endAngle, count) {
   return index * angleStep + startAngle;
 }
 
-function layoutMaker(config) {
-  const data = text
-    .replace(/[,.]/g, '')
-    .toLowerCase()
-    .split(' ')
-    .filter(function (d, index, a) {
-      return a.indexOf(d) === index;
-    })
-    .map(function (d) {
-      return {
-        text: d,
-        weight: Math.random() ** 5,
-        color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
-          255 * Math.random(),
-        )})`,
-      };
-    });
+const data = text
+  .replace(/[,.]/g, '')
+  .toLowerCase()
+  .split(' ')
+  .filter(function (d, index, a) {
+    return a.indexOf(d) === index;
+  })
+  .map(function (d) {
+    return {
+      text: d,
+      weight: Math.random() ** 5,
+      color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
+        255 * Math.random(),
+      )})`,
+    };
+  });
+
+function layoutMaker(config, adat) {
   return d3TagCloud()
     .size([getWidth(config), getHeight(config)])
     .words(
-      data.map((d) => ({
+      adat.map((d) => ({
         text: d.text,
         color: d.color,
         fontFamily: config.fontFamily ?? 'Impact',
         style: config.fontStyle ?? 'normal',
         fontWeight: config.fontWeight ?? 'normal',
-        size: 10 + d.weight * 90,
+        size: 10 + d.weight * 80,
       })),
     )
-
     .padding(config.padding ?? 5)
     .rotate(() => getRotation(config.startAngle, config.endAngle, config.count))
     .font(getFont)
     .fontStyle(getFontStyle)
-    .fontSize((d) => getFontSize(d, 0));
+    .fontSize((d) => getFontSize(d));
 }
 
 const View = ({ words, conf }) => (
@@ -113,7 +113,7 @@ const View = ({ words, conf }) => (
     <g transform={`translate(${getWidth(conf) / 2}, ${getHeight(conf) / 2})`}>
       {words.map(
         (d) =>
-          console.log('cc', getFontWeight(d)) || (
+          console.log('cc DOM', getFontWeight(d)) || (
             <text
               style={{
                 transform: `translate(${d.x}, ${d.y}) rotate(${d.rotate})`,
@@ -226,7 +226,7 @@ class Component extends React.Component<Props> {
       fontFamily: bulletViewModel.fontFamily,
       fontStyle: bulletViewModel.fontStyle,
     };
-    const layout = layoutMaker(conf1);
+    const layout = layoutMaker(conf1, data);
 
     let ww;
     layout.on('end', (w) => (ww = w)).start();

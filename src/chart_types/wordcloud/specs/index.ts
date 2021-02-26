@@ -70,6 +70,8 @@ export interface WordcloudSpec extends Spec {
   fontWeight: number;
   fontFamily: string;
   fontStyle: string;
+  minFontSize: number;
+  maxFontSize: number;
   target: number;
   actual: number;
   bands: number[];

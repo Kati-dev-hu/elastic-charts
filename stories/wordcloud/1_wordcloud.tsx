@@ -36,6 +36,8 @@ export const Example = () => {
   const angleCount = number('angleCount', 2, { range: true, min: 2, max: 360, step: 1 });
   const padding = number('padding', 2, { range: true, min: 1, max: 10, step: 1 });
   const fontWeight = number('fontWeight', 300, { range: true, min: 100, max: 900, step: 100 });
+  const minFontSize = number('minFontSize', 10, { range: true, min: 10, max: 85, step: 5 });
+  const maxFontSize = number('maxFontSize', 90, { range: true, min: 15, max: 90, step: 5 });
   const fontFamily = select(
     'fontFamily',
     { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
@@ -72,6 +74,8 @@ export const Example = () => {
         fontWeight={fontWeight}
         fontFamily={fontFamily}
         fontStyle={fontStyle}
+        minFontSize={minFontSize}
+        maxFontSize={maxFontSize}
         base={base}
         target={target}
         actual={actual}
