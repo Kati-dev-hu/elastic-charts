@@ -89,6 +89,7 @@ const data = text
   });
 
 function layoutMaker(config, adat) {
+  console.log('size', );
   return d3TagCloud()
     .size([getWidth(config), getHeight(config)])
     .words(
@@ -105,6 +106,7 @@ function layoutMaker(config, adat) {
     .rotate(() => getRotation(config.startAngle, config.endAngle, config.count))
     .font(getFont)
     .fontStyle(getFontStyle)
+    .fontWeight(getFontWeight)
     .fontSize((d) => getFontSize(d));
 }
 
