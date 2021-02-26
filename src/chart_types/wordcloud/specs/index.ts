@@ -44,6 +44,7 @@ export interface WordcloudBandFillColorAccessorInput {
   minFontSize: number;
   maxFontSize: number;
   spiral: string;
+  exponent: number;
   target: number;
   highestValue: number;
   lowestValue: number;
@@ -76,6 +77,7 @@ export interface WordcloudSpec extends Spec {
   minFontSize: number;
   maxFontSize: number;
   spiral: string;
+  exponent: number;
   target: number;
   actual: number;
   bands: number[];
@@ -108,6 +110,7 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     | 'minFontSize'
     | 'maxFontSize'
     | 'spiral'
+    | 'exponent'
     | 'subtype'
     | 'base'
     | 'target'

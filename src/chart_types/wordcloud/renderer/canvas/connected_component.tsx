@@ -81,24 +81,24 @@ const data = text
   .map(function (d) {
     return {
       text: d,
-      weight: Math.random() ** 5,
+      weight: Math.random(),
       color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
         255 * Math.random(),
       )})`,
     };
   });
 
-function layoutMaker(config, adat) {
+function layoutMaker(config, data) {
   return d3TagCloud()
     .size([getWidth(config), getHeight(config)])
     .words(
-      adat.map((d) => ({
+      data.map((d) => ({
         text: d.text,
         color: d.color,
         fontFamily: config.fontFamily ?? 'Impact',
         style: config.fontStyle ?? 'normal',
         fontWeight: config.fontWeight ?? 'normal',
-        size: config.minFontSize + (config.maxFontSize - config.minFontSize) * d.weight,
+        size: config.minFontSize + (config.maxFontSize - config.minFontSize) * d.weight ** config.exponent,
       })),
     )
     .spiral(config.spiral ?? 'archimedean')
@@ -227,6 +227,7 @@ class Component extends React.Component<Props> {
       minFontSize: bulletViewModel.minFontSize,
       maxFontSize: bulletViewModel.maxFontSize,
       spiral: bulletViewModel.spiral,
+      exponent: bulletViewModel.exponent,
     };
     const layout = layoutMaker(conf1, data);
 
