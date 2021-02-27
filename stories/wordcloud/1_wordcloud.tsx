@@ -39,7 +39,7 @@ const configs = [
     maxFontSize: 90,
     fontFamily: 'Arial Narrow',
     fontStyle: 'normal',
-    shape: 'oval',
+    shape: 'archimedean',
   },
   {
     startAngle: -15,
@@ -65,7 +65,7 @@ const configs = [
     maxFontSize: 79,
     fontFamily: 'Luminari',
     fontStyle: 'italic',
-    shape: 'rectangular',
+    shape: 'archimedean',
   },
   {
     startAngle: 0,
@@ -88,21 +88,21 @@ export const Example = () => {
   const base = number('base', 0, { range: true, min: 0, max: 300, step: 1 });
   const target = number('target', 260, { range: true, min: 0, max: 300, step: 1 });
   const actual = number('actual', 170, { range: true, min: 0, max: 300, step: 1 });
-  const spiral = select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, 'archimedean');
+  const spiral = select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, startConfig.shape);
   const startAngle = number('startAngle', startConfig.startAngle, { range: true, min: -360, max: 360, step: 1 });
-  const endAngle = number('endAngle', 45, { range: true, min: -360, max: 360, step: 1 });
-  const angleCount = number('angleCount', 2, { range: true, min: 2, max: 360, step: 1 });
-  const padding = number('padding', 2, { range: true, min: 0, max: 10, step: 1 });
-  const exponent = number('exponent', 3, { range: true, min: 0, max: 15, step: 1 });
-  const fontWeight = number('fontWeight', 300, { range: true, min: 100, max: 900, step: 100 });
-  const minFontSize = number('minFontSize', 10, { range: true, min: 6, max: 85, step: 1 });
-  const maxFontSize = number('maxFontSize', 90, { range: true, min: 15, max: 150, step: 1 });
+  const endAngle = number('endAngle', startConfig.endAngle, { range: true, min: -360, max: 360, step: 1 });
+  const angleCount = number('angleCount', startConfig.angleCount, { range: true, min: 2, max: 360, step: 1 });
+  const padding = number('padding', startConfig.padding, { range: true, min: 0, max: 10, step: 1 });
+  const exponent = number('exponent', startConfig.exponent, { range: true, min: 0, max: 15, step: 1 });
+  const fontWeight = number('fontWeight', startConfig.fontWeight, { range: true, min: 100, max: 900, step: 100 });
+  const minFontSize = number('minFontSize', startConfig.minFontSize, { range: true, min: 6, max: 85, step: 1 });
+  const maxFontSize = number('maxFontSize', startConfig.maxFontSize, { range: true, min: 15, max: 150, step: 1 });
   const fontFamily = select(
     'fontFamily',
     { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
-    'Arial Narrow',
+    startConfig.fontFamily,
   );
-  const fontStyle = select('fontStyle', { normal: 'normal', italic: 'italic' }, 'normal');
+  const fontStyle = select('fontStyle', { normal: 'normal', italic: 'italic' }, startConfig.fontStyle);
 
   const ticks = array('ticks', ['0', '50', '100', '150', '200', '250', '300']).map(Number);
   const bands = array('bands', ['200', '250', '300']).map(Number);
