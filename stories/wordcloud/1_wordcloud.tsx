@@ -27,10 +27,63 @@ import { Color } from '../../src/utils/common';
 
 const subtype = GoalSubtype.Goal;
 
-const firstAlpha = [{ startAngle: -45 }];
+const configs = [
+  {
+    startAngle: -45,
+    endAngle: 45,
+    angleCount: 2,
+    padding: 0,
+    exponent: 3,
+    fontWeight: 100,
+    minFontSize: 10,
+    maxFontSize: 90,
+    fontFamily: 'Arial Narrow',
+    fontStyle: 'normal',
+    shape: 'oval',
+  },
+  {
+    startAngle: -15,
+    endAngle: 15,
+    angleCount: 7,
+    padding: 0,
+    exponent: 5,
+    fontWeight: 600,
+    minFontSize: 17,
+    maxFontSize: 79,
+    fontFamily: 'Impact',
+    fontStyle: 'normal',
+    shape: 'rectangular',
+  },
+  {
+    startAngle: 0,
+    endAngle: 25,
+    angleCount: 16,
+    padding: 0,
+    exponent: 7,
+    fontWeight: 100,
+    minFontSize: 17,
+    maxFontSize: 79,
+    fontFamily: 'Luminari',
+    fontStyle: 'italic',
+    shape: 'rectangular',
+  },
+  {
+    startAngle: 0,
+    endAngle: 90,
+    angleCount: 2,
+    padding: 1,
+    exponent: 4,
+    fontWeight: 600,
+    minFontSize: 14,
+    maxFontSize: 92,
+    fontFamily: 'Arial Narrow',
+    fontStyle: 'normal',
+    shape: 'rectangular',
+  },
+];
 const chosen = 0;
 
-const startConfig = firstAlpha[chosen];
+const startConfig = configs[chosen];
 export const Example = () => {
   const base = number('base', 0, { range: true, min: 0, max: 300, step: 1 });
   const target = number('target', 260, { range: true, min: 0, max: 300, step: 1 });
