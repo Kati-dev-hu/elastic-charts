@@ -43,7 +43,7 @@ export const getTooltipInfoSelector = createCachedSelector(
 
     pickedShapes.forEach((shape) => {
       tooltipInfo.values.push({
-        label: 'Actual',
+        label: 'Word count',
         color: 'white',
         isHighlighted: false,
         isVisible: true,
@@ -51,8 +51,8 @@ export const getTooltipInfoSelector = createCachedSelector(
           specId: spec.id,
           key: spec.id,
         },
-        value: shape.actual,
-        formattedValue: `${shape.actual}`,
+        value: shape.data.length,
+        formattedValue: `${shape.data.length}`,
       });
     });
 
