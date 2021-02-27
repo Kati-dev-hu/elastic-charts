@@ -23,6 +23,7 @@ import { WordcloudBandFillColorAccessorInput } from '../../specs';
 import { GoalSubtype } from '../../specs/constants';
 import { config } from '../config/config';
 import { Config } from './config_types';
+import { Color } from '../../../../utils/common';
 
 interface BandViewModel {
   value: number;
@@ -33,6 +34,13 @@ interface TickViewModel {
   value: number;
   text: string;
 }
+
+interface DataModel {
+  text: string;
+  weight: number;
+  color: Color;
+}
+
 
 /** @internal */
 export interface BulletViewModel {
@@ -50,6 +58,7 @@ export interface BulletViewModel {
   maxFontSize: number;
   spiral: string;
   exponent: number;
+  data: DataModel[];
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;
@@ -119,6 +128,7 @@ export const nullGoalViewModel = {
   ...commonDefaults,
   bands: [],
   ticks: [],
+  data: [],
   labelMajor: '',
   labelMinor: '',
   centralMajor: '',

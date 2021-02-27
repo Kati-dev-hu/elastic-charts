@@ -27,6 +27,27 @@ import { Color } from '../../src/utils/common';
 
 const subtype = GoalSubtype.Goal;
 
+const text =
+  'Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn. Snackwave artisan man braid DIY retro truffaut tumeric helvetica. Ugh shabby chic PBR&B pork belly vegan pabst, food truck plaid direct trade franzen pour-over chillwave fingerstache. Blog pinterest intelligentsia humblebrag, farm-to-table hashtag umami williamsburg. Bushwick helvetica godard jianbing bicycle rights, salvia hashtag before they sold out lumbersexual. Waistcoat snackwave gentrify mumblecore farm-to-table banjo tbh post-ironic aesthetic. Bushwick selfies poutine kinfolk bicycle rights williamsburg, cray affogato iPhone sustainable. Shoreditch lo-fi tbh, palo santo affogato banh mi narwhal. Pickled pitchfork heirloom vice man bun normcore post-ironic ethical freegan blog. Chillwave readymade activated charcoal, shaman chia literally fixie stumptown jianbing yuccie lo-fi kinfolk coloring book small batch helvetica.';
+
+const data = text
+  .replace(/[,.]/g, '')
+  .toLowerCase()
+  .split(' ')
+  .filter(function (d, index, a) {
+    return a.indexOf(d) === index;
+  })
+  .map(function (d) {
+    return {
+      text: d,
+      weight: Math.random(),
+      color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
+        255 * Math.random(),
+      )})`,
+    };
+  });
+
+
 const configs = [
   {
     startAngle: -45,
@@ -120,7 +141,6 @@ export const Example = () => {
   }, {});
 
   const bandFillColor = (x: number): Color => colorMap[x];
-  console.log('story', { minFontSize, maxFontSize });
   return (
     <Chart className="story-chart">
       <Wordcloud
@@ -137,6 +157,7 @@ export const Example = () => {
         maxFontSize={maxFontSize}
         spiral={spiral}
         exponent={exponent}
+        data={data}
         base={base}
         target={target}
         actual={actual}

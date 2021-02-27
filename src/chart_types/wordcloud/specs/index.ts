@@ -78,6 +78,7 @@ export interface WordcloudSpec extends Spec {
   maxFontSize: number;
   spiral: string;
   exponent: number;
+  data: [];
   target: number;
   actual: number;
   bands: number[];
@@ -111,6 +112,7 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     | 'maxFontSize'
     | 'spiral'
     | 'exponent'
+    | 'data'
     | 'subtype'
     | 'base'
     | 'target'

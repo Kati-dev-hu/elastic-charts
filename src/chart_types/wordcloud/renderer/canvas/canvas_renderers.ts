@@ -83,6 +83,7 @@ export function renderCanvas2d(
       maxFontSize,
       spiral,
       exponent,
+      data,
       actual,
       bands,
       ticks,
@@ -97,7 +98,7 @@ export function renderCanvas2d(
 
     const domain = [lowestValue, highestValue];
 
-    const data = {
+    const model = {
       base: { value: base },
       ...Object.fromEntries(bands.map(({ value }, index) => [`qualitative_${index}`, { value }])),
       target: { value: target },
@@ -112,6 +113,7 @@ export function renderCanvas2d(
       maxFontSize,
       spiral,
       exponent,
+      data,
       actual: { value: actual },
       labelMajor: { value: domain[circular || !vertical ? 0 : 1], text: labelMajor },
       labelMinor: { value: domain[circular || !vertical ? 0 : 1], text: labelMinor },
@@ -293,18 +295,18 @@ export function renderCanvas2d(
                         pxRangeMid,
                         0,
                         r + axisNormalOffset,
-                        angleScale(data[at].value) + Math.PI / 360,
-                        angleScale(data[at].value) - Math.PI / 360,
+                        angleScale(model[at].value) + Math.PI / 360,
+                        angleScale(model[at].value) - Math.PI / 360,
                         true,
                       );
                     } else {
-                      const dataClockwise = data[from].value < data[to].value;
+                      const dataClockwise = model[from].value < model[to].value;
                       ctx.arc(
                         pxRangeMid,
                         0,
                         r,
-                        angleScale(data[from].value),
-                        angleScale(data[to].value),
+                        angleScale(model[from].value),
+                        angleScale(model[to].value),
                         clockwise === dataClockwise,
                       );
                     }
@@ -318,7 +320,7 @@ export function renderCanvas2d(
                       label ? labelFontSize : central ? centralFontSize : tickFontSize,
                     );
                     ctx.scale(1, -1);
-                    const angle = angleScale(data[at].value);
+                    const angle = angleScale(model[at].value);
                     if (label) {
                       ctx.translate(0, r);
                     } else if (!central) {
@@ -327,14 +329,14 @@ export function renderCanvas2d(
                         -(r - GOLDEN_RATIO * barThickness) * Math.sin(angle),
                       );
                     }
-                    ctx.fillText(data[at].text, 0, 0);
+                    ctx.fillText(model[at].text, 0, 0);
                   }
                 } else {
                   ctx.translate(
                     vertical ? axisNormalOffset : axisTangentOffset,
                     vertical ? axisTangentOffset : axisNormalOffset,
                   );
-                  const atPx = data[at] && linearScale(data[at].value);
+                  const atPx = model[at] && linearScale(model[at].value);
                   if (aes.shape === 'line') {
                     ctx.lineWidth = lineWidth;
                     ctx.strokeStyle = aes.fillColor;
@@ -344,8 +346,8 @@ export function renderCanvas2d(
                       ctx.moveTo(vertical ? 0 : atFromPx, vertical ? atFromPx : 0);
                       ctx.lineTo(vertical ? 0 : atToPx, vertical ? atToPx : 0);
                     } else {
-                      const fromPx = linearScale(data[from].value);
-                      const toPx = linearScale(data[to].value);
+                      const fromPx = linearScale(model[from].value);
+                      const toPx = linearScale(model[to].value);
                       ctx.moveTo(vertical ? 0 : fromPx, vertical ? fromPx : 0);
                       ctx.lineTo(vertical ? 0 : toPx, vertical ? toPx : 0);
                     }
@@ -355,7 +357,7 @@ export function renderCanvas2d(
                     ctx.font = cssFontShorthand(fontShape, tickFontSize);
                     ctx.scale(1, -1);
                     ctx.translate(vertical ? 0 : atPx, vertical ? -atPx : 0);
-                    ctx.fillText(data[at].text, 0, 0);
+                    ctx.fillText(model[at].text, 0, 0);
                   }
                 }
                 ctx.stroke();
