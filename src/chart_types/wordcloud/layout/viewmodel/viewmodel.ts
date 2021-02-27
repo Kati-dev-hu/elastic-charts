@@ -40,9 +40,6 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
       : [];
 
   const {
-    subtype,
-    base,
-    target,
     startAngle,
     endAngle,
     angleCount,
@@ -55,51 +52,9 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     spiral,
     exponent,
     data,
-    actual,
-    bands,
-    ticks,
-    bandFillColor,
-    tickValueFormatter,
-    labelMajor,
-    labelMinor,
-    centralMajor,
-    centralMinor,
   } = spec;
 
-  const [lowestValue, highestValue] = [base, target, actual, ...bands, ...ticks].reduce(
-    ([min, max], value) => [Math.min(min, value), Math.max(max, value)],
-    [Infinity, -Infinity],
-  );
-
-  const aboveBaseCount = bands.filter((b: number) => b > base).length;
-  const belowBaseCount = bands.filter((b: number) => b <= base).length;
-
-  const callbackArgs = {
-    base,
-    target,
-    startAngle,
-    endAngle,
-    angleCount,
-    padding,
-    fontWeight,
-    fontFamily,
-    fontStyle,
-    minFontSize,
-    maxFontSize,
-    spiral,
-    exponent,
-    data,
-    actual,
-    highestValue,
-    lowestValue,
-    aboveBaseCount,
-    belowBaseCount,
-  };
-
   const bulletViewModel: BulletViewModel = {
-    subtype,
-    base,
-    target,
     startAngle,
     endAngle,
     angleCount,
@@ -112,25 +67,6 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     spiral,
     exponent,
     data,
-    actual,
-    bands: bands.map((value: number, index: number) => ({
-      value,
-      fillColor: bandFillColor({ value, index, ...callbackArgs }),
-    })),
-    ticks: ticks.map((value: number, index: number) => ({
-      value,
-      text: tickValueFormatter({ value, index, ...callbackArgs }),
-    })),
-    labelMajor: typeof labelMajor === 'string' ? labelMajor : labelMajor({ value: NaN, index: 0, ...callbackArgs }),
-    labelMinor: typeof labelMinor === 'string' ? labelMinor : labelMinor({ value: NaN, index: 0, ...callbackArgs }),
-    centralMajor:
-      typeof centralMajor === 'string' ? centralMajor : centralMajor({ value: NaN, index: 0, ...callbackArgs }),
-    centralMinor:
-      typeof centralMinor === 'string' ? centralMinor : centralMinor({ value: NaN, index: 0, ...callbackArgs }),
-    highestValue,
-    lowestValue,
-    aboveBaseCount,
-    belowBaseCount,
   };
 
   // combined viewModel

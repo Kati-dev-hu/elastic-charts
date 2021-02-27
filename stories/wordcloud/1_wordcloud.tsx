@@ -147,7 +147,6 @@ export const Example = () => {
       <Settings onElementClick={(d) => console.log('onElementClick', d)} />
       <Wordcloud
         id="spec_1"
-        subtype={subtype}
         startAngle={startAngle}
         endAngle={endAngle}
         angleCount={angleCount}
@@ -160,18 +159,6 @@ export const Example = () => {
         spiral={spiral}
         exponent={exponent}
         data={data}
-        base={base}
-        target={target}
-        actual={actual}
-        bands={bands}
-        ticks={ticks}
-        tickValueFormatter={({ value }: BandFillColorAccessorInput) => String(value)}
-        bandFillColor={({ value }: BandFillColorAccessorInput) => bandFillColor(value)}
-        labelMajor="Revenue 2020 YTD  "
-        labelMinor="(thousand USD)  "
-        centralMajor={`${actual}`}
-        centralMinor=""
-        config={{ angleStart: Math.PI, angleEnd: 0 }}
       />
     </Chart>
   );

@@ -19,21 +19,9 @@
 
 import { Pixels, PointObject } from '../../../../common/geometry';
 import { SpecTypes } from '../../../../specs/constants';
-import { WordcloudBandFillColorAccessorInput } from '../../specs';
-import { GoalSubtype } from '../../specs/constants';
+import { Color } from '../../../../utils/common';
 import { config } from '../config/config';
 import { Config } from './config_types';
-import { Color } from '../../../../utils/common';
-
-interface BandViewModel {
-  value: number;
-  fillColor: string;
-}
-
-interface TickViewModel {
-  value: number;
-  text: string;
-}
 
 /** @internal */
 export interface WordModel {
@@ -44,9 +32,6 @@ export interface WordModel {
 
 /** @internal */
 export interface BulletViewModel {
-  subtype: string;
-  base: number;
-  target: number;
   startAngle: number;
   endAngle: number;
   angleCount: number;
@@ -59,17 +44,6 @@ export interface BulletViewModel {
   spiral: string;
   exponent: number;
   data: WordModel[];
-  actual: number;
-  bands: Array<BandViewModel>;
-  ticks: Array<TickViewModel>;
-  labelMajor: string;
-  labelMinor: string;
-  centralMajor: string;
-  centralMinor: string;
-  highestValue: number;
-  lowestValue: number;
-  aboveBaseCount: number;
-  belowBaseCount: number;
 }
 
 /** @internal */
@@ -85,8 +59,6 @@ export type ShapeViewModel = {
 
 const commonDefaults = {
   specType: SpecTypes.Series,
-  subtype: GoalSubtype.Goal,
-  base: 0,
   startAngle: -20,
   endAngle: 20,
   angleCount: 5,
@@ -99,45 +71,17 @@ const commonDefaults = {
   spiral: 'archimedean',
   exponent: 3,
   data: [],
-  target: 100,
-  actual: 50,
-  ticks: [0, 25, 50, 75, 100],
 };
 
 /** @internal */
 export const defaultWordcloudSpec = {
   ...commonDefaults,
-  bands: [50, 75, 100],
-  bandFillColor: ({ value, base, highestValue, lowestValue }: WordcloudBandFillColorAccessorInput) => {
-    const aboveBase = value > base;
-    const ratio = aboveBase
-      ? (value - base) / (Math.max(base, highestValue) - base)
-      : (value - base) / (Math.min(base, lowestValue) - base);
-    const level = Math.round(255 * ratio);
-    return aboveBase ? `rgb(0, ${level}, 0)` : `rgb( ${level}, 0, 0)`;
-  },
-  tickValueFormatter: ({ value }: WordcloudBandFillColorAccessorInput) => String(value),
-  labelMajor: ({ base }: WordcloudBandFillColorAccessorInput) => String(base),
-  // eslint-disable-next-line no-empty-pattern
-  labelMinor: ({}: WordcloudBandFillColorAccessorInput) => 'unit',
-  centralMajor: ({ base }: WordcloudBandFillColorAccessorInput) => String(base),
-  centralMinor: ({ target }: WordcloudBandFillColorAccessorInput) => String(target),
 };
 
 /** @internal */
 export const nullGoalViewModel = {
   ...commonDefaults,
-  bands: [],
-  ticks: [],
   data: [],
-  labelMajor: '',
-  labelMinor: '',
-  centralMajor: '',
-  centralMinor: '',
-  highestValue: 100,
-  lowestValue: 0,
-  aboveBaseCount: 0,
-  belowBaseCount: 0,
 };
 
 /** @internal */

@@ -23,11 +23,9 @@ import { ChartTypes } from '../..';
 import { Spec } from '../../../specs';
 import { SpecTypes } from '../../../specs/constants';
 import { getConnect, specComponentFactory } from '../../../state/spec_factory';
-import { Color, RecursivePartial } from '../../../utils/common';
+import { Color } from '../../../utils/common';
 import { config } from '../layout/config/config';
-import { Config } from '../layout/types/config_types';
 import { WordModel, defaultWordcloudSpec } from '../layout/types/viewmodel_types';
-import { GoalSubtype } from './constants';
 
 /** @alpha */
 export interface WordcloudBandFillColorAccessorInput {
@@ -66,8 +64,6 @@ const defaultProps = {
 export interface WordcloudSpec extends Spec {
   specType: typeof SpecTypes.Series;
   chartType: typeof ChartTypes.Wordcloud;
-  subtype: GoalSubtype;
-  base: number;
   startAngle: number;
   endAngle: number;
   angleCount: number;
@@ -80,27 +76,15 @@ export interface WordcloudSpec extends Spec {
   spiral: string;
   exponent: number;
   data: WordModel[];
-  target: number;
-  actual: number;
-  bands: number[];
-  ticks: number[];
-  bandFillColor: WordcloudBandFillColorAccessor;
-  tickValueFormatter: WordcloudBandFillColorAccessor;
-  labelMajor: string | WordcloudBandFillColorAccessor;
-  labelMinor: string | WordcloudBandFillColorAccessor;
-  centralMajor: string | WordcloudBandFillColorAccessor;
-  centralMinor: string | WordcloudBandFillColorAccessor;
-  config: RecursivePartial<Config>;
 }
 
-type SpecRequiredProps = Pick<WordcloudSpec, 'id' | 'actual'>;
+type SpecRequiredProps = Pick<WordcloudSpec, 'id'>;
 type SpecOptionalProps = Partial<Omit<WordcloudSpec, 'chartType' | 'specType' | 'id'>>;
 
 /** @alpha */
 export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptionalProps> = getConnect()(
   specComponentFactory<
     WordcloudSpec,
-    | 'config'
     | 'chartType'
     | 'startAngle'
     | 'endAngle'
@@ -114,17 +98,5 @@ export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptional
     | 'spiral'
     | 'exponent'
     | 'data'
-    | 'subtype'
-    | 'base'
-    | 'target'
-    | 'actual'
-    | 'bands'
-    | 'ticks'
-    | 'bandFillColor'
-    | 'tickValueFormatter'
-    | 'labelMajor'
-    | 'labelMinor'
-    | 'centralMajor'
-    | 'centralMinor'
   >(defaultProps),
 );
