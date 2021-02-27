@@ -29,7 +29,7 @@ import { getInternalIsInitializedSelector, InitStatus } from '../../../../state/
 import { Dimensions } from '../../../../utils/dimensions';
 import { nullShapeViewModel, ShapeViewModel } from '../../layout/types/viewmodel_types';
 import { geometries } from '../../state/selectors/geometries';
-import { renderCanvas2d } from './canvas_renderers';
+// import { renderCanvas2d } from './canvas_renderers';
 
 function getFont(d) {
   return d.fontFamily;
@@ -240,12 +240,12 @@ class Component extends React.Component<Props> {
 
   private drawCanvas() {
     if (this.ctx) {
-      // console.log(this.props.geometries.bulletViewModel);
-      const { width, height }: Dimensions = this.props.chartContainerDimensions;
-      renderCanvas2d(this.ctx, this.devicePixelRatio, {
-        ...this.props.geometries,
-        config: { ...this.props.geometries.config, width, height },
-      });
+      /*      const { width, height }: Dimensions = this.props.chartContainerDimensions;
+                renderCanvas2d(this.ctx, this.devicePixelRatio, {
+             ...this.props.geometries,
+             config: { ...this.props.geometries.config, width, height },
+           });
+      */
     }
   }
 }
