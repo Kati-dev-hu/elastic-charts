@@ -20,17 +20,18 @@
 import { number, color, array, select } from '@storybook/addon-knobs';
 import React from 'react';
 
-import { Chart, Wordcloud } from '../../src';
+import { Chart, Settings, Wordcloud } from '../../src';
 import { BandFillColorAccessorInput } from '../../src/chart_types/goal_chart/specs';
 import { GoalSubtype } from '../../src/chart_types/goal_chart/specs/constants';
 import { Color } from '../../src/utils/common';
+import { WordModel } from '../../src/chart_types/wordcloud/layout/types/viewmodel_types';
 
 const subtype = GoalSubtype.Goal;
 
 const text =
   'Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn. Snackwave artisan man braid DIY retro truffaut tumeric helvetica. Ugh shabby chic PBR&B pork belly vegan pabst, food truck plaid direct trade franzen pour-over chillwave fingerstache. Blog pinterest intelligentsia humblebrag, farm-to-table hashtag umami williamsburg. Bushwick helvetica godard jianbing bicycle rights, salvia hashtag before they sold out lumbersexual. Waistcoat snackwave gentrify mumblecore farm-to-table banjo tbh post-ironic aesthetic. Bushwick selfies poutine kinfolk bicycle rights williamsburg, cray affogato iPhone sustainable. Shoreditch lo-fi tbh, palo santo affogato banh mi narwhal. Pickled pitchfork heirloom vice man bun normcore post-ironic ethical freegan blog. Chillwave readymade activated charcoal, shaman chia literally fixie stumptown jianbing yuccie lo-fi kinfolk coloring book small batch helvetica.';
 
-const data = text
+const data: WordModel[] = text
   .replace(/[,.]/g, '')
   .toLowerCase()
   .split(' ')
@@ -142,6 +143,8 @@ export const Example = () => {
   const bandFillColor = (x: number): Color => colorMap[x];
   return (
     <Chart className="story-chart">
+      {/* eslint-disable-next-line no-console */}
+      <Settings onElementClick={(d) => console.log('onElementClick', d)} />
       <Wordcloud
         id="spec_1"
         subtype={subtype}

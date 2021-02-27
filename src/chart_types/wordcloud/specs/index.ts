@@ -26,7 +26,7 @@ import { getConnect, specComponentFactory } from '../../../state/spec_factory';
 import { Color, RecursivePartial } from '../../../utils/common';
 import { config } from '../layout/config/config';
 import { Config } from '../layout/types/config_types';
-import { DataModel, defaultWordcloudSpec } from '../layout/types/viewmodel_types';
+import { WordModel, defaultWordcloudSpec } from '../layout/types/viewmodel_types';
 import { GoalSubtype } from './constants';
 
 /** @alpha */
@@ -79,7 +79,7 @@ export interface WordcloudSpec extends Spec {
   maxFontSize: number;
   spiral: string;
   exponent: number;
-  data: DataModel[];
+  data: WordModel[];
   target: number;
   actual: number;
   bands: number[];
@@ -94,7 +94,7 @@ export interface WordcloudSpec extends Spec {
 }
 
 type SpecRequiredProps = Pick<WordcloudSpec, 'id' | 'actual'>;
-type SpecOptionalProps = Partial<Omit<WordcloudSpec, 'chartType' | 'specType' | 'id' | 'data'>>;
+type SpecOptionalProps = Partial<Omit<WordcloudSpec, 'chartType' | 'specType' | 'id'>>;
 
 /** @alpha */
 export const Wordcloud: React.FunctionComponent<SpecRequiredProps & SpecOptionalProps> = getConnect()(

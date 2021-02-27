@@ -36,7 +36,7 @@ interface TickViewModel {
 }
 
 /** @internal */
-export interface DataModel {
+export interface WordModel {
   text: string;
   weight: number;
   color: Color;
@@ -58,7 +58,7 @@ export interface BulletViewModel {
   maxFontSize: number;
   spiral: string;
   exponent: number;
-  data: DataModel[];
+  data: WordModel[];
   actual: number;
   bands: Array<BandViewModel>;
   ticks: Array<TickViewModel>;

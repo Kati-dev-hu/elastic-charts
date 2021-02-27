@@ -47,8 +47,8 @@ export const getPickedShapesLayerValues = createCachedSelector(
     const elements = pickedShapes.map<Array<LayerValue>>((model) => {
       const values: Array<LayerValue> = [];
       values.push({
-        groupByRollup: 'Actual',
-        value: model.actual,
+        groupByRollup: 'Word count',
+        value: model.data.length,
         sortIndex: 0,
         path: [],
         depth: 0,
