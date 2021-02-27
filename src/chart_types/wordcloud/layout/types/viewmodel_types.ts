@@ -35,12 +35,12 @@ interface TickViewModel {
   text: string;
 }
 
-interface DataModel {
+/** @internal */
+export interface DataModel {
   text: string;
   weight: number;
   color: Color;
 }
-
 
 /** @internal */
 export interface BulletViewModel {
@@ -98,6 +98,7 @@ const commonDefaults = {
   maxFontSize: 50,
   spiral: 'archimedean',
   exponent: 3,
+  data: [],
   target: 100,
   actual: 50,
   ticks: [0, 25, 50, 75, 100],

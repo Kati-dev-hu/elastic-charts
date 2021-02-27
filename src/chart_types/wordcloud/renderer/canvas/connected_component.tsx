@@ -209,7 +209,8 @@ class Component extends React.Component<Props> {
       spiral: bulletViewModel.spiral,
       exponent: bulletViewModel.exponent,
     };
-    const layout = layoutMaker(conf1, data);
+
+    const layout = layoutMaker(conf1, bulletViewModel.data);
 
     let ww;
     layout.on('end', (w) => (ww = w)).start();

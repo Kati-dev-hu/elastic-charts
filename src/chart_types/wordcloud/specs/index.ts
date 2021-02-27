@@ -26,7 +26,7 @@ import { getConnect, specComponentFactory } from '../../../state/spec_factory';
 import { Color, RecursivePartial } from '../../../utils/common';
 import { config } from '../layout/config/config';
 import { Config } from '../layout/types/config_types';
-import { defaultWordcloudSpec } from '../layout/types/viewmodel_types';
+import { DataModel, defaultWordcloudSpec } from '../layout/types/viewmodel_types';
 import { GoalSubtype } from './constants';
 
 /** @alpha */
@@ -45,6 +45,7 @@ export interface WordcloudBandFillColorAccessorInput {
   maxFontSize: number;
   spiral: string;
   exponent: number;
+  data: [];
   target: number;
   highestValue: number;
   lowestValue: number;
@@ -78,7 +79,7 @@ export interface WordcloudSpec extends Spec {
   maxFontSize: number;
   spiral: string;
   exponent: number;
-  data: [];
+  data: DataModel[];
   target: number;
   actual: number;
   bands: number[];

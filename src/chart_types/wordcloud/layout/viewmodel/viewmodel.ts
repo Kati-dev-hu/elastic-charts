@@ -88,6 +88,7 @@ export function shapeViewModel(textMeasure: TextMeasure, spec: WordcloudSpec, co
     maxFontSize,
     spiral,
     exponent,
+    data,
     actual,
     highestValue,
     lowestValue,

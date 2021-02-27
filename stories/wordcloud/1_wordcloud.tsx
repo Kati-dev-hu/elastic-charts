@@ -20,7 +20,7 @@
 import { number, color, array, select } from '@storybook/addon-knobs';
 import React from 'react';
 
-import { Chart, PartitionLayout, Wordcloud } from '../../src';
+import { Chart, Wordcloud } from '../../src';
 import { BandFillColorAccessorInput } from '../../src/chart_types/goal_chart/specs';
 import { GoalSubtype } from '../../src/chart_types/goal_chart/specs/constants';
 import { Color } from '../../src/utils/common';
@@ -46,7 +46,6 @@ const data = text
       )})`,
     };
   });
-
 
 const configs = [
   {
@@ -102,7 +101,7 @@ const configs = [
     shape: 'rectangular',
   },
 ];
-const chosen = 0;
+const chosen = 1;
 
 const startConfig = configs[chosen];
 export const Example = () => {
