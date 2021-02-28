@@ -48,8 +48,8 @@ const data: WordModel[] = text
     };
   });
 
-const configs = [
-  {
+const configs = {
+  squareWords: {
     startAngle: -45,
     endAngle: 45,
     angleCount: 2,
@@ -62,7 +62,7 @@ const configs = [
     fontStyle: 'normal',
     shape: 'archimedean',
   },
-  {
+  smallWaves: {
     startAngle: -15,
     endAngle: 15,
     angleCount: 7,
@@ -75,7 +75,7 @@ const configs = [
     fontStyle: 'normal',
     shape: 'rectangular',
   },
-  {
+  italic: {
     startAngle: 0,
     endAngle: 25,
     angleCount: 16,
@@ -88,7 +88,7 @@ const configs = [
     fontStyle: 'italic',
     shape: 'archimedean',
   },
-  {
+  horizontalVertical: {
     startAngle: 0,
     endAngle: 90,
     angleCount: 2,
@@ -101,14 +101,10 @@ const configs = [
     fontStyle: 'normal',
     shape: 'rectangular',
   },
-];
-const chosen = 1;
+};
 
-const startConfig = configs[chosen];
+const startConfig = configs.squareWords;
 export const Example = () => {
-  const base = number('base', 0, { range: true, min: 0, max: 300, step: 1 });
-  const target = number('target', 260, { range: true, min: 0, max: 300, step: 1 });
-  const actual = number('actual', 170, { range: true, min: 0, max: 300, step: 1 });
   const spiral = select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, startConfig.shape);
   const startAngle = number('startAngle', startConfig.startAngle, { range: true, min: -360, max: 360, step: 1 });
   const endAngle = number('endAngle', startConfig.endAngle, { range: true, min: -360, max: 360, step: 1 });
