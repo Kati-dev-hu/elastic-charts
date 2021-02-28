@@ -71,7 +71,7 @@ function getRotation(startAngle, endAngle, count, text) {
   const angleRange = endAngle - startAngle;
   const count = count ?? 360;
   const interval = count - 1;
-  const angleStep = angleRange / interval;
+  const angleStep = interval === 0 ? 0: angleRange / interval;
   const index = hashWithinRange(text, count);
   return index * angleStep + startAngle;
 }

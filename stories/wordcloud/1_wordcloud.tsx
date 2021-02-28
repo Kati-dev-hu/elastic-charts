@@ -60,7 +60,7 @@ const configs = {
   single: {
     startAngle: 0,
     endAngle: 0,
-    angleCount: 2,
+    angleCount: 1,
     padding: 1,
     exponent: 4,
     fontWeight: 900,
