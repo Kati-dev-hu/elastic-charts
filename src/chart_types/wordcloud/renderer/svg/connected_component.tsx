@@ -29,7 +29,10 @@ import { getInternalIsInitializedSelector, InitStatus } from '../../../../state/
 import { Dimensions } from '../../../../utils/dimensions';
 import { nullShapeViewModel, ShapeViewModel } from '../../layout/types/viewmodel_types';
 import { geometries } from '../../state/selectors/geometries';
-// import { renderCanvas2d } from './canvas_renderers';
+
+function seed() {
+  return 0.5;
+}
 
 function getFont(d) {
   return d.fontFamily;
@@ -55,21 +58,27 @@ function getFontSize(d) {
   return d.size;
 }
 
-function getRotation(startAngle, endAngle, count) {
+function hashWithinRange(str, max) {
+  str = JSON.stringify(str);
+  let hash = 0;
+  for (const ch of str) {
+    hash = (hash * 31 + ch.charCodeAt(0)) % max;
+  }
+  return Math.abs(hash) % max;
+}
+
+function getRotation(startAngle, endAngle, count, text) {
   const angleRange = endAngle - startAngle;
   const count = count ?? 360;
   const interval = count - 1;
   const angleStep = angleRange / interval;
-  const randomUpTo = function (upto) {
-    return Math.random() * upto;
-  };
-  const randomUpToCount = randomUpTo(count);
-  const index = Math.floor(randomUpToCount);
+  const index = hashWithinRange(text, count);
   return index * angleStep + startAngle;
 }
 
 function layoutMaker(config, data) {
   return d3TagCloud()
+    .random(seed)
     .size([getWidth(config), getHeight(config)])
     .words(
       data.map((d) => ({
@@ -83,7 +92,7 @@ function layoutMaker(config, data) {
     )
     .spiral(config.spiral ?? 'archimedean')
     .padding(config.padding ?? 5)
-    .rotate(() => getRotation(config.startAngle, config.endAngle, config.count))
+    .rotate((d) => getRotation(config.startAngle, config.endAngle, config.count, d.text))
     .font(getFont)
     .fontStyle(getFontStyle)
     .fontWeight(getFontWeight)
