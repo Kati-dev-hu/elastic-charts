@@ -32,9 +32,7 @@ const data: WordModel[] = text
   .replace(/[,.]/g, '')
   .toLowerCase()
   .split(' ')
-  .filter(function (d, index, a) {
-    return a.indexOf(d) === index;
-  })
+  .filter((d, index, a) => a.indexOf(d) === index)
   .map(function (d) {
     return {
       text: d,
