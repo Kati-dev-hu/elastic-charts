@@ -22,10 +22,12 @@ import React from 'react';
 
 import { Chart, Settings, Wordcloud } from '../../src';
 import { WordModel } from '../../src/chart_types/wordcloud/layout/types/viewmodel_types';
+import { getRandomNumberGenerator } from '../../src/mocks/utils';
 
 const text =
   'Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn. Snackwave artisan man braid DIY retro truffaut tumeric helvetica. Ugh shabby chic PBR&B pork belly vegan pabst, food truck plaid direct trade franzen pour-over chillwave fingerstache. Blog pinterest intelligentsia humblebrag, farm-to-table hashtag umami williamsburg. Bushwick helvetica godard jianbing bicycle rights, salvia hashtag before they sold out lumbersexual. Waistcoat snackwave gentrify mumblecore farm-to-table banjo tbh post-ironic aesthetic. Bushwick selfies poutine kinfolk bicycle rights williamsburg, cray affogato iPhone sustainable. Shoreditch lo-fi tbh, palo santo affogato banh mi narwhal. Pickled pitchfork heirloom vice man bun normcore post-ironic ethical freegan blog. Chillwave readymade activated charcoal, shaman chia literally fixie stumptown jianbing yuccie lo-fi kinfolk coloring book small batch helvetica.';
 
+const getRandomNumber = getRandomNumberGenerator();
 const data: WordModel[] = text
   .replace(/[,.]/g, '')
   .toLowerCase()
@@ -36,10 +38,8 @@ const data: WordModel[] = text
   .map(function (d) {
     return {
       text: d,
-      weight: Math.random(),
-      color: `rgb(${Math.round(255 * Math.random())},${Math.round(0 * Math.random())},${Math.round(
-        255 * Math.random(),
-      )})`,
+      weight: getRandomNumber(0, 1, 20),
+      color: `rgb(${getRandomNumber(0, 255)},${0},${getRandomNumber(0, 255)})`,
     };
   });
 
