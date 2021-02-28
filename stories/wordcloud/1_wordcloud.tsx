@@ -17,16 +17,11 @@
  * under the License.
  */
 
-import { number, color, array, select } from '@storybook/addon-knobs';
+import { number, select } from '@storybook/addon-knobs';
 import React from 'react';
 
 import { Chart, Settings, Wordcloud } from '../../src';
-import { BandFillColorAccessorInput } from '../../src/chart_types/goal_chart/specs';
-import { GoalSubtype } from '../../src/chart_types/goal_chart/specs/constants';
-import { Color } from '../../src/utils/common';
 import { WordModel } from '../../src/chart_types/wordcloud/layout/types/viewmodel_types';
-
-const subtype = GoalSubtype.Goal;
 
 const text =
   'Truffaut lo-fi kinfolk, vegan roof party palo santo meggings brooklyn. Snackwave artisan man braid DIY retro truffaut tumeric helvetica. Ugh shabby chic PBR&B pork belly vegan pabst, food truck plaid direct trade franzen pour-over chillwave fingerstache. Blog pinterest intelligentsia humblebrag, farm-to-table hashtag umami williamsburg. Bushwick helvetica godard jianbing bicycle rights, salvia hashtag before they sold out lumbersexual. Waistcoat snackwave gentrify mumblecore farm-to-table banjo tbh post-ironic aesthetic. Bushwick selfies poutine kinfolk bicycle rights williamsburg, cray affogato iPhone sustainable. Shoreditch lo-fi tbh, palo santo affogato banh mi narwhal. Pickled pitchfork heirloom vice man bun normcore post-ironic ethical freegan blog. Chillwave readymade activated charcoal, shaman chia literally fixie stumptown jianbing yuccie lo-fi kinfolk coloring book small batch helvetica.';
@@ -49,6 +44,19 @@ const data: WordModel[] = text
   });
 
 const configs = {
+  default: {
+    startAngle: -45,
+    endAngle: 45,
+    angleCount: 2,
+    padding: 0,
+    exponent: 3,
+    fontWeight: 100,
+    minFontSize: 10,
+    maxFontSize: 90,
+    fontFamily: 'Arial Narrow',
+    fontStyle: 'normal',
+    shape: 'archimedean',
+  },
   squareWords: {
     startAngle: -45,
     endAngle: 45,
@@ -103,40 +111,52 @@ const configs = {
   },
 };
 
-const startConfig = configs.squareWords;
 export const Example = () => {
-  const spiral = select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, startConfig.shape);
-  const startAngle = number('startAngle', startConfig.startAngle, { range: true, min: -360, max: 360, step: 1 });
-  const endAngle = number('endAngle', startConfig.endAngle, { range: true, min: -360, max: 360, step: 1 });
-  const angleCount = number('angleCount', startConfig.angleCount, { range: true, min: 2, max: 360, step: 1 });
-  const padding = number('padding', startConfig.padding, { range: true, min: 0, max: 10, step: 1 });
-  const exponent = number('exponent', startConfig.exponent, { range: true, min: 0, max: 15, step: 1 });
-  const fontWeight = number('fontWeight', startConfig.fontWeight, { range: true, min: 100, max: 900, step: 100 });
-  const minFontSize = number('minFontSize', startConfig.minFontSize, { range: true, min: 6, max: 85, step: 1 });
-  const maxFontSize = number('maxFontSize', startConfig.maxFontSize, { range: true, min: 15, max: 150, step: 1 });
-  const fontFamily = select(
-    'fontFamily',
-    { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
-    startConfig.fontFamily,
+  const configName = select(
+    'config',
+    Object.keys(configs).reduce((p, k) => ({ ...p, [k]: k }), {}),
+    'default',
   );
-  const fontStyle = select('fontStyle', { normal: 'normal', italic: 'italic' }, startConfig.fontStyle);
+  const startConfig = configs[configName];
+  const template = configName !== 'default';
+  const spiral = template
+    ? startConfig.shape
+    : select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, startConfig.shape);
+  const startAngle = template
+    ? startConfig.startAngle
+    : number('startAngle', startConfig.startAngle, { range: true, min: -360, max: 360, step: 1 });
+  const endAngle = template
+    ? startConfig.endAngle
+    : number('endAngle', startConfig.endAngle, { range: true, min: -360, max: 360, step: 1 });
+  const angleCount = template
+    ? startConfig.angleCount
+    : number('angleCount', startConfig.angleCount, { range: true, min: 2, max: 360, step: 1 });
+  const padding = template
+    ? startConfig.padding
+    : number('padding', startConfig.padding, { range: true, min: 0, max: 10, step: 1 });
+  const exponent = template
+    ? startConfig.exponent
+    : number('exponent', startConfig.exponent, { range: true, min: 0, max: 15, step: 1 });
+  const fontWeight = template
+    ? startConfig.fontWeight
+    : number('fontWeight', startConfig.fontWeight, { range: true, min: 100, max: 900, step: 100 });
+  const minFontSize = template
+    ? startConfig.minFontSize
+    : number('minFontSize', startConfig.minFontSize, { range: true, min: 6, max: 85, step: 1 });
+  const maxFontSize = template
+    ? startConfig.maxFontSize
+    : number('maxFontSize', startConfig.maxFontSize, { range: true, min: 15, max: 150, step: 1 });
+  const fontFamily = template
+    ? startConfig.fontFamily
+    : select(
+        'fontFamily',
+        { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
+        startConfig.fontFamily,
+      );
+  const fontStyle = template
+    ? startConfig.fontStyle
+    : select('fontStyle', { normal: 'normal', italic: 'italic' }, startConfig.fontStyle);
 
-  const ticks = array('ticks', ['0', '50', '100', '150', '200', '250', '300']).map(Number);
-  const bands = array('bands', ['200', '250', '300']).map(Number);
-
-  const opacityMap: { [k: string]: number } = {
-    '200': 0.2,
-    '250': 0.12,
-    '300': 0.05,
-  };
-
-  const colorMap: { [k: number]: Color } = bands.reduce<{ [k: number]: Color }>((acc, band) => {
-    const defaultValue = opacityMap[band] ?? 0;
-    acc[band] = color(`color at ${band}`, `rgba(0,0,0,${defaultValue.toFixed(2)})`, 'colors');
-    return acc;
-  }, {});
-
-  const bandFillColor = (x: number): Color => colorMap[x];
   return (
     <Chart className="story-chart">
       {/* eslint-disable-next-line no-console */}
