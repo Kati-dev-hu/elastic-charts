@@ -44,7 +44,7 @@ const data: WordModel[] = text
   });
 
 const configs = {
-  default: {
+  edit: {
     startAngle: -45,
     endAngle: 45,
     angleCount: 2,
@@ -115,10 +115,10 @@ export const Example = () => {
   const configName = select(
     'config',
     Object.keys(configs).reduce((p, k) => ({ ...p, [k]: k }), {}),
-    'default',
+    'edit',
   );
   const startConfig = configs[configName];
-  const template = configName !== 'default';
+  const template = configName !== 'edit';
   const spiral = template
     ? startConfig.shape
     : select('shape', { oval: 'archimedean', rectangular: 'rectangular' }, startConfig.shape);
@@ -150,7 +150,7 @@ export const Example = () => {
     ? startConfig.fontFamily
     : select(
         'fontFamily',
-        { Arial: 'Arial', Arial_Narrow: 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
+        { Arial: 'Arial', 'Arial Narrow': 'Arial Narrow', Courier: 'Courier', Impact: 'Impact', Luminari: 'Luminari' },
         startConfig.fontFamily,
       );
   const fontStyle = template
