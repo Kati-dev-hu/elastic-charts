@@ -281,4 +281,4 @@ const mapStateToProps = (state: GlobalChartState): ReactiveChartStateProps => {
 };
 
 /** @internal */
-export const Goal = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const Wordcloud = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -28,7 +28,7 @@ import { InitStatus } from '../../../state/selectors/get_internal_is_intialized'
 import { LegendItemLabel } from '../../../state/selectors/get_legend_items_labels';
 import { DebugState } from '../../../state/types';
 import { Dimensions } from '../../../utils/dimensions';
-import { Goal } from '../renderer/canvas/connected_component';
+import { Wordcloud } from '../renderer/svg/connected_component';
 import { getSpecOrNull } from './selectors/goal_spec';
 import { isTooltipVisibleSelector } from './selectors/is_tooltip_visible';
 import { createOnElementClickCaller } from './selectors/on_element_click_caller';
@@ -88,7 +88,7 @@ export class WordcloudState implements InternalChartState {
     return (
       <>
         <Tooltip getChartContainerRef={containerRef} />
-        <Goal forwardStageRef={forwardStageRef} />
+        <Wordcloud forwardStageRef={forwardStageRef} />
       </>
     );
   }
