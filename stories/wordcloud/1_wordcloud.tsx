@@ -175,6 +175,22 @@ const configs = {
     backgroundColor: '#1c1c24',
     weightFun: 'exponential',
   },
+  checkOut: {
+    startAngle: -90,
+    endAngle: 90,
+    angleCount: 22,
+    padding: 2,
+    exponent: 5,
+    fontWeight: 600,
+    minFontSize: 90,
+    maxFontSize: 150,
+    fontFamily: 'Impact',
+    fontStyle: 'normal',
+    shape: 'rectangular',
+    palette: 'euiColorBlind',
+    backgroundColor: '#ffffff',
+    weightFun: 'exponential',
+  },
 };
 
 const rawData = text

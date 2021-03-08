@@ -29,7 +29,6 @@ import { getInternalIsInitializedSelector, InitStatus } from '../../../../state/
 import { Dimensions } from '../../../../utils/dimensions';
 import { nullShapeViewModel, ShapeViewModel } from '../../layout/types/viewmodel_types';
 import { geometries } from '../../state/selectors/geometries';
-import { select } from '@storybook/addon-knobs';
 
 function seed() {
   return 0.5;
@@ -95,24 +94,32 @@ function log(minFontSize, maxFontSize, _exponent, weight) {
 
 const weightFunLookup = { linear, exponential, log, squareRoot };
 
+function wordCount(words) {
+  return words.length;
+}
+
+var a = 0;
+
 function layoutMaker(config, data) {
+  const words = data.map((d) => {
+    const weightFun = weightFunLookup[config.weightFun];
+    return {
+      text: d.text,
+      color: d.color,
+      fontFamily: config.fontFamily ?? 'Impact',
+      style: config.fontStyle ?? 'normal',
+      fontWeight: config.fontWeight ?? 'normal',
+      size: weightFun(config.minFontSize, config.maxFontSize, config.exponent, d.weight),
+    };
+  });
+
+  a = wordCount(words);
+
+  console.log('number of words for JD: ' + a);
   return d3TagCloud()
     .random(seed)
     .size([getWidth(config), getHeight(config)])
-    .words(
-      data.map((d) => {
-        const weightFun = weightFunLookup[config.weightFun];
-
-        return {
-          text: d.text,
-          color: d.color,
-          fontFamily: config.fontFamily ?? 'Impact',
-          style: config.fontStyle ?? 'normal',
-          fontWeight: config.fontWeight ?? 'normal',
-          size: weightFun(config.minFontSize, config.maxFontSize, config.exponent, d.weight),
-        };
-      }),
-    )
+    .words(words)
     .spiral(config.spiral ?? 'archimedean')
     .padding(config.padding ?? 5)
     .rotate((d) => getRotation(config.startAngle, config.endAngle, config.count, d.text))
@@ -126,7 +133,9 @@ const View = ({ words, conf }) => (
   <svg width={getWidth(conf)} height={getHeight(conf)}>
     <g transform={`translate(${getWidth(conf) / 2}, ${getHeight(conf) / 2})`}>
       {words.map((d) => {
-        //   debugger;
+        const b = wordCount(words);
+        console.log('number of placed words: ' + b);
+        console.log(a === b ? 'All words are placed' : 'Not all words are placed');
         return (
           <text
             style={{
